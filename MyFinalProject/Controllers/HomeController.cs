@@ -8,10 +8,12 @@ namespace MyFinalProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly Context _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, Context context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -27,8 +29,7 @@ namespace MyFinalProject.Controllers
         [HttpGet]
         public IActionResult Order()
         {
-            Context shopContext = new Context();
-            var users = shopContext.Users.ToList();
+            var users = _context.Users.ToList();
             ViewData["Users"] = users;
             return View();
         }
@@ -36,23 +37,21 @@ namespace MyFinalProject.Controllers
         [HttpPost]
         public IActionResult Order(OrderModel model)
         {
-            Context shopContext = new Context();
             if (ModelState.IsValid)
             {
-                shopContext.Orders.Add(new AutoStoreLib.Models.Order(model.UserId, model.Info));
-                shopContext.SaveChanges();
+                _context.Orders.Add(new AutoStoreLib.Models.Order(model.UserId, model.Info));
+                _context.SaveChanges();
                 return View("SavedSuccessfully");
             }
 
-            var users = shopContext.Users.ToList();
+            var users = _context.Users.ToList();
             ViewData["Users"] = users;
             return View();
         }
 
         public IActionResult Question()
         {
-            Context shopContext = new Context();
-            var users = shopContext.Users.ToList();
+            var users = _context.Users.ToList();
             ViewData["Users"] = users;
             return View();
         }
@@ -60,15 +59,14 @@ namespace MyFinalProject.Controllers
         [HttpPost]
         public IActionResult Question(QuestionModel model)
         {
-            Context shopContext = new Context();
             if (ModelState.IsValid)
             {
-                shopContext.Questions.Add(new AutoStoreLib.Models.Question(model.UserId, model.Title, model.Text));
-                shopContext.SaveChanges();
+                _context.Questions.Add(new AutoStoreLib.Models.Question(model.UserId, model.Title, model.Text));
+                _context.SaveChanges();
                 return View("SavedSuccessfully");
             }
 
-            var users = shopContext.Users.ToList();
+            var users = _context.Users.ToList();
             ViewData["Users"] = users;
             return View();
         }

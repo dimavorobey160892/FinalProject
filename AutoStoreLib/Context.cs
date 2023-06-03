@@ -7,7 +7,7 @@ namespace AutoStoreLib
 {
     public class Context : DbContext
     {
-        public Context()
+        public Context(DbContextOptions<Context> options) : base(options)
         {
             Database.EnsureCreated();
         }
@@ -19,6 +19,12 @@ namespace AutoStoreLib
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<User>()
+               .HasOne(user => user.Role)
+               .WithMany(role => role.Users)
+               .HasForeignKey(user => user.RoleId);
+
+            //redo
             builder.Entity<Order>()
                 .HasOne(order => order.User)
                 .WithMany(user => user.Orders)
@@ -29,15 +35,17 @@ namespace AutoStoreLib
                 .WithMany(user => user.Questions)
                 .HasForeignKey(order => order.UserId);
 
+           
+
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(
-            "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=shopDb;" +
-            "Integrated Security=True;Connect Timeout=30;Encrypt=False;" +
-            "Trust Server Certificate=False;Application Intent=ReadWrite;" +
-            "Multi Subnet Failover=False");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(
+        //    "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=shopDb;" +
+        //    "Integrated Security=True;Connect Timeout=30;Encrypt=False;" +
+        //    "Trust Server Certificate=False;Application Intent=ReadWrite;" +
+        //    "Multi Subnet Failover=False");
+        //}
     }
 }
