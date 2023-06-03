@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+<h1>@ViewData["Title"]</h1>
+
+@if ((bool)ViewData["IsLoginCorrect"])
+{
+    <h2>Login is correct</h2>
+}
+else
+{
+    using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "login-form" }))
+    {
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="Email" name="Email" aria-describedby="emailHelp" required value="@ViewBag.Email">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+            <label for="Password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="Password" name="Password" required value="@ViewBag.Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+}

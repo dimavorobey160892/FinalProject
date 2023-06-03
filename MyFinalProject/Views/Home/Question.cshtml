@@ -1,0 +1,32 @@
+﻿@using ShopLib.Models;
+@{
+    ViewData["Title"] = "Question";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+@using (Html.BeginForm("Question", "Home", FormMethod.Post, new { @class = "login-form" }))
+{
+    <div class="mb-3">
+        <label for="UserId" class="form-label">Choose User</label>
+        <select id="UserId" name="UserId" class="form-select" aria-label="Select user" required>
+            <option selected value="">Open this select menu</option>
+            @foreach (var user in (List<User>)ViewData["Users"])
+            {
+                <option value="@user.Id">@user.FirstName @user.LastName</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="Title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="Title" name="Title" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="Text" class="form-label">Enter your question</label>
+        <textarea class="form-control" id="Text" name="Text" rows="3" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+}

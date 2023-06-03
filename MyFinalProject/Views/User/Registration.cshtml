@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Registration";
+}
+<h1>@ViewData["Title"]</h1>
+
+@if ((bool)ViewData["IsRegistrationCorrect"])
+{
+    <h2>Registered</h2>
+}
+else
+{
+    using (Html.BeginForm("Registration", "User", FormMethod.Post, new { @class = "login-form" }))
+    {
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="Email" name="Email" aria-describedby="emailHelp" required>
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+            <label for="Password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="Password" name="Password" required>
+        </div>
+        <div class="mb-3">
+            <label for="FirstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="FirstName" name="FirstName" required>
+        </div>
+        <div class="mb-3">
+            <label for="LastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="LastName" name="LastName" required>
+        </div>
+        <div class="mb-3">
+            <label for="Age" class="form-label">Age</label>
+            <input type="number" min="0" max="120" class="form-control" id="Age" name="Age" required>
+        </div>
+        <div class="mb-3">
+            <label for="Gender" class="form-label">Gender</label>
+            <select id="Gender" name="Gender" class="form-select" aria-label="Select gender" required>
+                <option selected value="">Open this select menu</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="Address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="Address" name="Address">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+}
