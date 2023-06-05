@@ -19,6 +19,8 @@ namespace AutoStoreLib.Models
         public int UserId { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
+        public int CarId { get; set; }
         public virtual User User { get; set; }
+        public virtual Car Car { get; set; }
     }
 }

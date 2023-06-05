@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using AutoStoreLib;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using MyFinalProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,10 @@ builder.Services.AddAuthorization();
 var connectionString = builder.Configuration.GetConnectionString("autoStoreDb") ?? throw new InvalidOperationException("Connection string 'autoStoreDb' not found.");
 builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(connectionString));
+
+//builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IUserService, UserService>();
 
 var app = builder.Build();
 

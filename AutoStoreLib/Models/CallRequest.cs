@@ -6,16 +6,10 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Models
 {
-    public record Role: BaseEntity
+    public record CallRequest: BaseEntity
     {
         public string Name { get; set; }
-
-        public virtual IEnumerable<User> Users { get; set;}
-
-        public Role(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+        public string PhoneNumber { get; set; }
+        public DateTime Date { get; set; }
     }
 }

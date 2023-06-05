@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+@using AutoStoreLib.Enums;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -53,6 +55,12 @@
                             </li>
                             <li class="nav-item">
                                 <a class="text-dark">@User.Identity.Name</a>
+                            </li>
+                        }
+                        @if ((bool)ViewData["IsAdmin"])
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminMenu">Admin menu</a>
                             </li>
                         }
                     </ul>

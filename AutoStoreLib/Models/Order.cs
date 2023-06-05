@@ -16,6 +16,9 @@ namespace AutoStoreLib.Models
         }
 
         public int UserId { get; set; }
+        public string CarModel { get; set; }
+        public int Price { get; set; }
+        public string Description { get; set; }
         public string Info { get; set; }
         public virtual User User { get; set; }
 

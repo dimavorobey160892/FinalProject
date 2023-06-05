@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using MyFinalProject.Models;
 using System.Security.Claims;
+using AutoStoreLib.Enums;
+using MyFinalProject.Services;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace MyFinalProject.Controllers
 {
@@ -11,10 +14,12 @@ namespace MyFinalProject.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private readonly Context _context;
-        public UserController(ILogger<UserController> logger, Context context)
+        private readonly IUserService _userService;
+        public UserController(ILogger<UserController> logger, Context context, IUserService userService)
         {
             _logger = logger;
             _context = context;
+            _userService = userService;
         }
 
         public async Task<IActionResult> Logout()
@@ -37,20 +42,15 @@ namespace MyFinalProject.Controllers
             {
                 var user = _context.Users
                     .FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
-                //ViewData["IsLoginCorrect"] = isExists;
-                //ViewBag.Email = model.Email;
-                //ViewBag.Password = model.Password;
                 if (user != null)
                 {
                     var claims = new List<Claim> 
                     { 
                         new Claim(ClaimTypes.Email, user.Email),
                         new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
-                        new Claim(ClaimTypes.Role, user.RoleId.ToString())
+                        new Claim(ClaimTypes.Role, ((RolesEnum)user.RoleId).ToString())
                     };
-                    // создаем объект ClaimsIdentity
                     ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
-                    // установка аутентификационных куки
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                     return Redirect(returnUrl ?? "/");
                 }
@@ -87,6 +87,12 @@ namespace MyFinalProject.Controllers
                 ViewData["IsRegistrationCorrect"] = false;
             }
             return View();
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            ViewData["IsAdmin"] = _userService.isAdmin;
+            base.OnActionExecuting(context);
         }
     }
 }
