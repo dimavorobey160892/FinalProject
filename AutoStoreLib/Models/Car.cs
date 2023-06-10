@@ -8,12 +8,28 @@ namespace AutoStoreLib.Models
 {
     public record Car: BaseEntity
     {
+        public Car() { }
+        public Car(string name, int year, int price, int typeOfBodyId, int mileage, double? engineСapacityMin, double? engineСapacityMax, int gearboxId, int typeOfFuelId, string description, string vin)
+        {
+            Name = name;
+            Year = year;
+            Price = price;
+            TypeOfBodyId = typeOfBodyId;
+            Mileage = mileage;
+            EngineСapacityMin = engineСapacityMin;
+            EngineСapacityMax = engineСapacityMax;
+            GearboxId = gearboxId;
+            TypeOfFuelId = typeOfFuelId;
+            Description = description;
+            Vin = vin;
+        }
         public string Name { get; set; }
         public int Year { get; set; }
         public int Price { get; set; }
         public int TypeOfBodyId { get; set; }
         public int Mileage { get; set; }
-        public int EngineId { get; set; }
+        public double? EngineСapacityMin { get; set; }
+        public double? EngineСapacityMax { get; set; }
         public int GearboxId { get; set; }
         public int TypeOfFuelId { get; set; }
         public string Description { get; set; }

@@ -4,6 +4,7 @@ using AutoStoreLib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoStoreLib.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230610114850_ChangeOrderTable")]
+    partial class ChangeOrderTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,11 +125,8 @@ namespace AutoStoreLib.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("EngineСapacityMax")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("EngineСapacityMin")
-                        .HasColumnType("float");
+                    b.Property<int>("EngineId")
+                        .HasColumnType("int");
 
                     b.Property<int>("GearboxId")
                         .HasColumnType("int");

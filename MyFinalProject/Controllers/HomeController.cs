@@ -48,8 +48,8 @@ namespace MyFinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Orders.Add(new AutoStoreLib.Models.Order(model.UserId, model.Info));
-                _context.SaveChanges();
+                //_context.Orders.Add(new AutoStoreLib.Models.Order(model.UserId, model.Info,));
+                //_context.SaveChanges();
                 return View("SavedSuccessfully");
             }
 
@@ -70,8 +70,8 @@ namespace MyFinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Questions.Add(new AutoStoreLib.Models.Question(model.UserId, model.Title, model.Text));
-                _context.SaveChanges();
+                //_context.Questions.Add(new AutoStoreLib.Models.Question(model.UserId, model.Title, model.Text));
+                //_context.SaveChanges();
                 return View("SavedSuccessfully");
             }
 
@@ -92,5 +92,6 @@ namespace MyFinalProject.Controllers
             ViewData["IsAdmin"] = _userService.isAdmin;
             base.OnActionExecuting(context);
         }
+
     }
 }

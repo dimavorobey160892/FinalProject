@@ -9,19 +9,6 @@ namespace AutoStoreLib.Models
 {
     public record User : BaseEntity
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public int Age { get; set; }
-        public string Gender { get; set; }
-        public string? Address { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public int RoleId { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
-        public virtual ICollection<Question> Questions { get; set; }
-        public virtual Role Role { get; set; }
-
-
         public User()
         {
         }
@@ -38,5 +25,20 @@ namespace AutoStoreLib.Models
             Password = password;
             RoleId = (int)RolesEnum.User;
         }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Age { get; set; }
+        public string Gender { get; set; }
+        public string? Address { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public int RoleId { get; set; }
+        public virtual List<Order> Orders { get; set; }
+        public virtual List<Order> AnsweredOrders { get; set; }
+        public virtual List<Question> Questions { get; set; }
+        public virtual List<Answer> Answers { get; set; }
+        public virtual Role Role { get; set; }
+
     }
 }

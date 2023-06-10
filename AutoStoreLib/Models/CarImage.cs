@@ -8,6 +8,12 @@ namespace AutoStoreLib.Models
 {
     public record CarImage: BaseEntity
     {
+        public CarImage() { }
+        public CarImage(int carId, byte[] image)
+        {
+            CarId = carId;
+            Image = image;
+        }
         public int CarId { get; set; }
         public byte[] Image { get; set; }
 

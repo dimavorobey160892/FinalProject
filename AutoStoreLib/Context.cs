@@ -14,12 +14,15 @@ namespace AutoStoreLib
         
         public DbSet<User> Users { get; set; }
         public DbSet<Question> Questions { get; set; }
-        public DbSet<CallRequest> CallRequests { get; set; }
-        
+        public DbSet<CallRequest> CallRequests { get; set; }        
         public DbSet<Order> Orders { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<CarImage> CarImages { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<QuestionMessage> QuestionMessages { get; set; }
+        public DbSet<AnswerMessage> AnswerMessages { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -44,13 +47,42 @@ namespace AutoStoreLib
                 .WithMany(car => car.Questions)
                 .HasForeignKey(question => question.CarId);
 
-            //redo
+            builder.Entity<Answer>()
+                .HasMany(answer => answer.Messages)
+                .WithOne(message => message.Answer)
+                .HasForeignKey(message => message.AnswerId);
+
+            builder.Entity<Answer>()
+                .HasOne(answer => answer.Question)
+                .WithOne(question => question.Answer)
+                .HasForeignKey<Answer>(answer => answer.QuestionId);
+
+            builder.Entity<Answer>()
+                .HasOne(answer => answer.Admin)
+                .WithMany(admin => admin.Answers)
+                .HasForeignKey(answer => answer.AdminId);
+
+            builder.Entity<Question>()
+                .HasMany(question => question.Messages)
+                .WithOne(message => message.Question)
+                .HasForeignKey(message => message.QuestionId);
+
             builder.Entity<Order>()
                 .HasOne(order => order.User)
                 .WithMany(user => user.Orders)
                 .HasForeignKey(order => order.UserId);
 
+            builder.Entity<Order>()
+                .HasOne(answeredOrder => answeredOrder.Admin)
+                .WithMany(admin => admin.AnsweredOrders)
+                .HasForeignKey(answeredOrder => answeredOrder.AdminId);
+
             builder.Entity<Role>().HasData(new Role(1, "User"), new Role(2, "Admin"));
+
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
     }
 }

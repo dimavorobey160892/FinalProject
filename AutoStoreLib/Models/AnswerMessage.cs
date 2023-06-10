@@ -9,11 +9,12 @@ namespace AutoStoreLib.Models
     public record AnswerMessage : BaseEntity
     {
         public AnswerMessage() { }
-        public AnswerMessage(int userId, string text)
+        public AnswerMessage(int userId, string text, int answerId)
         {
             UserId = userId;
             Text = text;
             Date = DateTime.Now;
+            AnswerId = answerId;
         }
 
         public string Text { get; set; }

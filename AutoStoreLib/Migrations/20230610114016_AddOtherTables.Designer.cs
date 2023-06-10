@@ -4,6 +4,7 @@ using AutoStoreLib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoStoreLib.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230610114016_AddOtherTables")]
+    partial class AddOtherTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,11 +125,8 @@ namespace AutoStoreLib.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("EngineСapacityMax")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("EngineСapacityMin")
-                        .HasColumnType("float");
+                    b.Property<int>("EngineId")
+                        .HasColumnType("int");
 
                     b.Property<int>("GearboxId")
                         .HasColumnType("int");
@@ -200,47 +200,24 @@ namespace AutoStoreLib.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Coments")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("DateAnswered")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateCreaded")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EngineId")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GearboxId")
-                        .HasColumnType("int");
+                    b.Property<string>("Info")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MaxMileage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaxPrice")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaxYear")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MinMileage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MinPrice")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MinYear")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.Property<int>("StatusId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeOfBodyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeOfFuelId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
