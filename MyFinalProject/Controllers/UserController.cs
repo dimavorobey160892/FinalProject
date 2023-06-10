@@ -44,14 +44,15 @@ namespace MyFinalProject.Controllers
                     .FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
                 if (user != null)
                 {
-                    var claims = new List<Claim> 
-                    { 
-                        new Claim(ClaimTypes.Email, user.Email),
-                        new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
-                        new Claim(ClaimTypes.Role, ((RolesEnum)user.RoleId).ToString())
-                    };
-                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                    await _userService.Login(user);
+                    //var claims = new List<Claim> 
+                    //{ 
+                    //    new Claim(ClaimTypes.Email, user.Email),
+                    //    new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+                    //    new Claim(ClaimTypes.Role, ((RolesEnum)user.RoleId).ToString())
+                    //};
+                    //ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
+                    //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                     return Redirect(returnUrl ?? "/");
                 }
                 else

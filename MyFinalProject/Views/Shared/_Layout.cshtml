@@ -5,16 +5,58 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Lesson32</title>
+    <title>@ViewData["Title"] - Auto of your dream</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Lesson32.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/fontawesome-free-6.4.0-web/css/all.css" />
+    <script defer src="~/lib/fontawesome-free-6.4.0-web/js/fontawesome.js"></script>
+    <script defer src="~/lib/fontawesome-free-6.4.0-web/js/solid.js"></script>
+    <script defer src="~/lib/fontawesome-free-6.4.0-web/js/brands.js"></script>
 </head>
 <body>
     <header>
+        <div class="container-fluid black-background">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12 address-top">
+                    <a href="https://goo.gl/maps/yNbsnNR4fqyktFWt5" target="_blank">
+                        <i class="fas fa-map-marker-alt"></i> 94, Vyacheslav Chornovil Street, Rivne, Rivne region, Ukraine, 33000
+                    </a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="top-right-content">
+                        <ul id="header-top-right-menu">
+                            <li>
+                                <a href="tel:+380680521632">
+                                    <i class="fas fa-phone-alt"></i>&nbsp;&nbsp;+38(068)052-16-32
+                                </a>
+                                <br> 
+                                <a href="tel:+380501723530">
+                                    <i class="fas fa-phone-alt"></i>&nbsp;&nbsp;+38(050)172-35-30
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/profile.php?id=100063924460282" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-facebook fa-2x"></i></a>
+                                <a href="https://www.instagram.com/auto_of_your_dream/" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-instagram fa-2x"></i>
+                                </a>
+                                <a href="https://www.youtube.com/channel/UCZXcAEAB5bnUNx3C7fsABrg" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-youtube fa-2x"></i>
+                                </a>
+                                <a href="https://t.me/auto_of_your_dream" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-telegram fa-2x"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Lesson32</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/logo.png" class="logo-img"/>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,20 +66,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @if (!User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Registration">Registration</a>
-                            </li>
-                        }
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Question">Question</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Available Cars</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cars">Avaible cars</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Question">Ask Question</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About us</a>
@@ -48,19 +81,35 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Order">Order a car</a>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
+                        @if (!User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="text-dark">@User.Identity.Name</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Registration">Registration</a>
                             </li>
                         }
-                        @if ((bool)ViewData["IsAdmin"])
+                        @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminMenu">Admin menu</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @User.Identity.Name
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @if ((bool)ViewData["IsAdmin"])
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AdminMenu">Admin menu</a>
+                                        </li>
+                                    }
+                                    <li>
+                                        <a class="dropdown-item" href="#">Settings</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                                    </li>
+                                </ul>
                             </li>
                         }
                     </ul>
@@ -76,7 +125,85 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - Lesson32 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="text-center">
+                        <img src="~/img/logo3.png" class="footer-img" />
+                    </div>
+                    <div>
+                        <p class="footer-text">
+                            Bringing and customs clearance of a car from Europe on favorable terms, with a guarantee and registration!
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <ul class="footer-menu">
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Available Cars</a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Question">Ask Question</a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About us</a>
+                        </li>
+                        <li >
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contacts">Contacts</a>
+                        </li>
+                        <li >
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Order">Order a car</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="footer-right-content">
+                        <div class="footer-right-item">
+                            <a href="tel:+380680521632" class="button-link " role="button">
+                                <span class="button-content-wrapper">
+                                    <span class="button-icon align-icon-left">
+                                        <i aria-hidden="true" class="fas fa-phone-alt"></i>
+                                    </span>
+                                    <span class="button-text">(068)052-16-32</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="footer-right-item">
+                            <a href="tel:+380501723530" class="button-link" role="button">
+                                <span class="button-content-wrapper">
+                                    <span class="button-icon align-icon-left">
+                                        <i aria-hidden="true" class="fas fa-phone-alt"></i>
+                                    </span>
+                                    <span class="button-text">(050)172-35-30</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="footer-right-item item-social">
+                            <a href="https://www.facebook.com/profile.php?id=100063924460282" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-facebook fa-2x"></i>
+                            </a>
+                            <a href="https://www.instagram.com/auto_of_your_dream/" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-instagram fa-2x"></i>
+                            </a>
+                            <a href="https://www.youtube.com/channel/UCZXcAEAB5bnUNx3C7fsABrg" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-youtube fa-2x"></i>
+                            </a>
+                            <a href="https://t.me/auto_of_your_dream" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-telegram fa-2x"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div class="container-fluid">
+            <div class="row black-background">
+                <div class="col-12 text-center">
+                    Copyright © 2023 <a asp-area="" asp-controller="Home" asp-action="Index">Auto Of Your Dream – buy a car from Europe on a turnkey basis</a>
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
