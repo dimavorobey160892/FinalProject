@@ -6,23 +6,28 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Models
 {
-    public record Question : BaseEntity
+    public record Answer : BaseEntity
     {
-        public Question() { }
-        public Question(int userId, int carId, string title)
+        public Answer() { }
+        public Answer(int userId, int adminId, int questionId, int carId, string title)
         {
             UserId = userId;
             Title = title;
-            CarId = carId;
             Date = DateTime.Now;
+            AdminId = adminId;
+            QuestionId = questionId;
+            CarId = carId;
         }
 
         public int UserId { get; set; }
+        public int AdminId { get; set; }
+        public int QuestionId { get; set; }
         public string Title { get; set; }
         public int CarId { get; set; }
         public DateTime Date { get; set; }
         public virtual User User { get; set; }
+        public virtual Question Question { get; set; }
         public virtual Car Car { get; set; }
-        public virtual List<QuestionMessage> Messages { get; set; }
+        public virtual List<AnswerMessage> Messages { get; set; }
     }
 }
