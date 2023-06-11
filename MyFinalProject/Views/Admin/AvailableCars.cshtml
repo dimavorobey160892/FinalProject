@@ -1,0 +1,22 @@
+﻿@using AutoStoreLib.Models;
+
+<div class="row">
+    <div class="col-12">
+        <button type="button" class="btn btn-danger" id="add-car">Add</button>
+    </div>
+</div>
+<div id="add-car-form" class="display-none">
+    @await Html.PartialAsync("AddCar")
+</div>
+<div id="cars-list">
+    @foreach (var car in (List<Car>)ViewData["Cars"])
+    {        
+        <h3>@car.Id. @car.Name</h3>
+        <div>
+            <button type="button" class="btn btn-warning">Edit</button>
+            <p>
+                test
+            </p>
+        </div>
+    }    
+</div>

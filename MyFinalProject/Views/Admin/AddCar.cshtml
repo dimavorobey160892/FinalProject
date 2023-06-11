@@ -1,0 +1,73 @@
+﻿@using AutoStoreLib.Enums;
+
+@using (Html.BeginForm("ChangeCar", "Admin", FormMethod.Post, new { @class = "row g-3", id = "add-car-form" }))
+{
+    <div class="col-md-6">
+        <label for="Name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="Name" name="Name" required>
+    </div>
+    <div class="col-md-6">
+        <label for="Year" class="form-label">Year</label>
+        <input type="number" min="1900" max="@DateTime.Now.Year" class="form-control" id="Year" name="Year" required>
+    </div>
+    <div class="col-6">
+        <label for="Price" class="form-label">Price, $</label>
+        <input type="number" min="0" class="form-control" id="Price" name="Price" required>
+    </div>
+    <div class="col-6">
+        <label for="TypeOfBodyId" class="form-label">Type of body</label>
+        <select id="TypeOfBodyId" name="TypeOfBodyId" class="form-select" aria-label="Select type of body" required>
+            <option selected value="">Open this select menu</option>
+            @foreach (var bodyId in (Array)ViewData["TypeOfBody"])
+            {
+                <option value="@bodyId">@Enum.GetName(typeof(TypeOfBodyEnum), bodyId)</option>
+            }
+        </select>
+    </div>
+    <div class="col-6">
+        <label for="Mileage" class="form-label">Mileage</label>
+        <input type="number" min="0" class="form-control" id="Mileage" name="Mileage" required>
+    </div>
+    <div class="col-6">
+        <label for="EngineСapacity" class="form-label">Engine Сapacity</label>
+        <input type="number" min="0" class="form-control" id="EngineСapacity" name="EngineСapacity" required>
+    </div>
+    <div class="col-6">
+        <label for="TypeOfFuelId" class="form-label">Type of fuel</label>
+        <select id="TypeOfFuelId" name="TypeOfFuelId" class="form-select" aria-label="Select type of gearbox" required>
+            <option selected value="">Open this select menu</option>
+            @foreach (var fuelId in (Array)ViewData["TypeOfFuel"])
+            {
+                <option value="@fuelId">@Enum.GetName(typeof(TypeOfFuelEnum), fuelId)</option>
+            }
+        </select>
+    </div>
+    <div class="col-6">
+        <label for="GearboxId" class="form-label">Gearbox</label>
+        <select id="GearboxId" name="TypeOfBodyId" class="form-select" aria-label="Select type of gearbox" required>
+            <option selected value="">Open this select menu</option>
+            @foreach (var gearboxId in (Array)ViewData["TypeOfGearbox"])
+            {
+                <option value="@gearboxId">@Enum.GetName(typeof(GearboxEnum), gearboxId)</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-12">
+        <label for="Vin" class="form-label">Vin</label>
+        <input type="text" class="form-control" id="Vin" name="Vin" required>
+    </div>
+    <div class="col-md-12">
+        <label for="Description" class="form-label">Description</label>
+        <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
+    </div>
+
+    <div class="col-md-12">
+        <label for="Images" class="form-label">Images</label>        
+        <input type="file"
+               class="filepond"
+               name="Images"
+               multiple
+               data-allow-reorder="true">
+    </div>
+    <button class="btn btn-primary" type="submit" id="save-car-btn">Save</button>
+}

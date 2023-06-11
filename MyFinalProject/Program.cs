@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoStoreLib;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MyFinalProject.Services;
+using MyFinalProject.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<Context>(options =>
 //builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
 var app = builder.Build();
 

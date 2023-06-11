@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>Admin menu</h1>
+
+<div id="tabs">
+    <ul>
+        <li><a href="#available-cars">Available Cars</a></li>
+        <li><a href="#questions">Questions</a></li>
+        <li><a href="#call-requests">Call Requests</a></li>
+        <li><a href="#orders">Orders</a></li>
+    </ul>
+    <div id="available-cars">
+        @await Html.PartialAsync("AvailableCars")
+    </div>
+    <div id="questions">
+        @await Html.PartialAsync("Questions")
+    </div>
+    <div id="call-requests">
+        @await Html.PartialAsync("CallRequests")
+    </div>
+    <div id="orders">
+        @await Html.PartialAsync("Orders")
+    </div>
+</div>
+
+@section Scripts{
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-validate-size/dist/filepond-plugin-image-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="~/lib/filepond/filepond.min.js"></script>
+    <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
+    <script src="~/js/admin.js"></script>
+}
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="https://pqina.nl/filepond/static/assets/filepond.css" />
+    <link href="~/lib/filepond/filepond.min.css" rel="stylesheet" />
+}

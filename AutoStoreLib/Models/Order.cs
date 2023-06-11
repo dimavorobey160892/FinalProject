@@ -9,7 +9,12 @@ namespace AutoStoreLib.Models
     public record Order : BaseEntity
     {
         public Order() { }
-        public Order(int userId, string carModel, int minYear, int maxYear, int minPrice, int maxPrice, int typeOfBodyId, int minMileage, int maxMileage, int engineId, int gearboxId, int typeOfFuelId, string coments, int statusId)
+
+        public Order(int userId, string carModel, int minYear, int maxYear, 
+            int minPrice, int maxPrice, int typeOfBodyId, int minMileage, 
+            int maxMileage, double? minEngineСapacity, 
+            double? maxEngineСapacity, int gearboxId, int typeOfFuelId, 
+            string coments, int statusId)
         {
             UserId = userId;
             CarModel = carModel;
@@ -20,7 +25,8 @@ namespace AutoStoreLib.Models
             TypeOfBodyId = typeOfBodyId;
             MinMileage = minMileage;
             MaxMileage = maxMileage;
-            EngineId = engineId;
+            MinEngineСapacity = minEngineСapacity;
+            MaxEngineСapacity = maxEngineСapacity;
             GearboxId = gearboxId;
             TypeOfFuelId = typeOfFuelId;
             Coments = coments;
@@ -38,6 +44,8 @@ namespace AutoStoreLib.Models
         public int MinMileage { get; set; }
         public int MaxMileage { get; set; }
         public int EngineId { get; set; }
+        public double? MinEngineСapacity { get; set; }
+        public double? MaxEngineСapacity { get; set; }
         public int GearboxId { get; set; }
         public int TypeOfFuelId { get; set; }
         public string Coments { get; set; }
