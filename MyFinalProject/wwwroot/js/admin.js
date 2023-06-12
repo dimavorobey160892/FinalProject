@@ -1,10 +1,10 @@
 ﻿$(function () {
 
     $("#tabs").tabs();
-    $("#cars-list").accordion();
+    $("#cars-list").accordion({ collapsible: true, active: false });
 
     $("#add-car").click(function () {
-        $("#add-car-form").toggle("blind", 500);
+        $("#add-car-div").toggle("blind", 500);
     });
 
     FilePond.registerPlugin(
@@ -25,14 +25,12 @@
 
     //var files = pond.getFiles();
 
-    $("#save-car-btn").submit(function (e) {
+    $("#add-car-form").submit(function (e) {
         e.preventDefault();
         var formdata = new FormData(this);
-        // append FilePond files into the form data
         var pondFiles = pond.getFiles();
         for (var i = 0; i < pondFiles.length; i++) {
-            // append the blob file
-            formdata.append('photos', pondFiles[i].file);
+            formdata.append('Images', pondFiles[i].file);
         }
 
         $.ajax({
@@ -43,6 +41,17 @@
             contentType: false,
             method: "post"
 
+        })
+        .done(function (data) {
+            $("#add-car-form")[0].reset();
+            pond.removeFiles();
+            $("#add-car-div").toggle("blind", 500);
+            //$("#cars-list").append(
+        })
+        .fail(function (data) {
+            $("body").html(
+                '<div class="alert alert-danger">Could not reach server, please try again later.</div>'
+            );
         });
 
     });

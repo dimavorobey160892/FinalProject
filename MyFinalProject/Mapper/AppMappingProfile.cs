@@ -9,7 +9,12 @@ namespace MyFinalProject.Mapper
     {
         public AppMappingProfile()
         {
-            CreateMap<Car, CarModel>();
+            CreateMap<Car, CarModel>()
+                .ForMember(x => x.Images, opt => opt.Ignore());
+
+            CreateMap<CarModel, Car>()
+                .ForMember(x => x.Images, opt => opt.Ignore())
+                .ForMember(x => x.Questions, opt => opt.Ignore());
         }
     }
 }

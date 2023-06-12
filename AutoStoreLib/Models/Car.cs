@@ -36,6 +36,7 @@ namespace AutoStoreLib.Models
         public int TypeOfFuelId { get; set; }
         public string Description { get; set; }
         public string Vin { get; set; }
+        public int StatusId { get; set; }
 
         public virtual IEnumerable<CarImage> Images { get; set; }
         public virtual IEnumerable<Question> Questions { get; set; }

@@ -5,7 +5,7 @@
         <button type="button" class="btn btn-danger" id="add-car">Add</button>
     </div>
 </div>
-<div id="add-car-form" class="display-none">
+<div id="add-car-div" class="display-none">
     @await Html.PartialAsync("AddCar")
 </div>
 <div id="cars-list">
@@ -17,6 +17,10 @@
             <p>
                 test
             </p>
+            @foreach (var image in car.Images)
+            {
+                <img src='@Url.Action( "Show", "Image", new { id = @image.Id } )' />
+            }
         </div>
     }    
 </div>

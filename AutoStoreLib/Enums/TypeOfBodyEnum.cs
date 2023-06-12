@@ -8,7 +8,7 @@ namespace AutoStoreLib.Enums
 {
     public enum TypeOfBodyEnum
     {
-        Sedan,
+        Sedan = 1,
         Wagon,
         Hatchback,
         Coupe,

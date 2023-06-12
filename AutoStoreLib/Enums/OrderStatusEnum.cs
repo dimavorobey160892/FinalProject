@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Enums
 {
-    public enum StatusEnum
+    public enum OrderStatusEnum
     {
-        New,
+        New = 1,
         InProgress,
         Finished,
         Cancelled

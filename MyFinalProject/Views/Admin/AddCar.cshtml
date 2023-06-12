@@ -18,9 +18,9 @@
         <label for="TypeOfBodyId" class="form-label">Type of body</label>
         <select id="TypeOfBodyId" name="TypeOfBodyId" class="form-select" aria-label="Select type of body" required>
             <option selected value="">Open this select menu</option>
-            @foreach (var bodyId in (Array)ViewData["TypeOfBody"])
+            @foreach (var bodyId in (Dictionary<int, string>)ViewData["TypeOfBody"])
             {
-                <option value="@bodyId">@Enum.GetName(typeof(TypeOfBodyEnum), bodyId)</option>
+                <option value="@bodyId.Key">@bodyId.Value</option>
             }
         </select>
     </div>
@@ -36,19 +36,19 @@
         <label for="TypeOfFuelId" class="form-label">Type of fuel</label>
         <select id="TypeOfFuelId" name="TypeOfFuelId" class="form-select" aria-label="Select type of gearbox" required>
             <option selected value="">Open this select menu</option>
-            @foreach (var fuelId in (Array)ViewData["TypeOfFuel"])
+            @foreach (var fuelId in (Dictionary<int, string>)ViewData["TypeOfFuel"])
             {
-                <option value="@fuelId">@Enum.GetName(typeof(TypeOfFuelEnum), fuelId)</option>
+                <option value="@fuelId.Key">@fuelId.Value</option>
             }
         </select>
     </div>
     <div class="col-6">
         <label for="GearboxId" class="form-label">Gearbox</label>
-        <select id="GearboxId" name="TypeOfBodyId" class="form-select" aria-label="Select type of gearbox" required>
+        <select id="GearboxId" name="GearboxId" class="form-select" aria-label="Select type of gearbox" required>
             <option selected value="">Open this select menu</option>
-            @foreach (var gearboxId in (Array)ViewData["TypeOfGearbox"])
+            @foreach (var gearboxId in (Dictionary<int, string>)ViewData["TypeOfGearbox"])
             {
-                <option value="@gearboxId">@Enum.GetName(typeof(GearboxEnum), gearboxId)</option>
+                <option value="@gearboxId.Key">@gearboxId.Value</option>
             }
         </select>
     </div>
@@ -58,7 +58,7 @@
     </div>
     <div class="col-md-12">
         <label for="Description" class="form-label">Description</label>
-        <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
+        <textarea class="form-control" id="Description" name="Description" rows="3" required></textarea>
     </div>
 
     <div class="col-md-12">
@@ -67,7 +67,7 @@
                class="filepond"
                name="Images"
                multiple
-               data-allow-reorder="true">
+               data-allow-reorder="true" required>
     </div>
     <button class="btn btn-primary" type="submit" id="save-car-btn">Save</button>
 }

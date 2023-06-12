@@ -8,7 +8,7 @@ namespace AutoStoreLib.Enums
 {
     public enum TypeOfFuelEnum
     {
-        Petrol,
+        Petrol = 1,
         LPG,
         Methane,
         Diesel,

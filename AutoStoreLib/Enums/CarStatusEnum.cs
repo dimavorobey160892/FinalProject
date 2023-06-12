@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Enums
 {
-    public enum GearboxEnum
+    public enum CarStatusEnum
     {
-        Manual = 1,
-        Automatic,
-        SemiAutomatic
+        New = 0,
+        Sold,
+        Deleted
     }
 }

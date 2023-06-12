@@ -13,7 +13,7 @@
         public int TypeOfFuelId { get; set; }
         public string Description { get; set; }
         public string Vin { get; set; }
-        //public byte[] Images { get; set; }
-        public IList<IFormFile> photos { get; set; }
+        public int StatusId { get; set; }
+        public IList<IFormFile> Images { get; set; }
     }
 }

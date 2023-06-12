@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using AutoStoreLib;
 using AutoStoreLib.Enums;
+using AutoStoreLib.Extensions;
 using AutoStoreLib.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 using MyFinalProject.Models;
 using MyFinalProject.Services;
 using System;
@@ -26,20 +29,22 @@ namespace MyFinalProject.Controllers
         }
         public IActionResult Index()
         {
-            var cars = _context.Cars.ToList();
+            var cars = _context.Cars
+                .Include(car => car.Images).ToList();
             ViewData["Cars"] = cars;
-            ViewData["TypeOfBody"] = Enum.GetValues(typeof(TypeOfBodyEnum));
-            ViewData["TypeOfGearbox"] = Enum.GetValues(typeof(GearboxEnum));
-            ViewData["TypeOfFuel"] = Enum.GetValues(typeof(TypeOfFuelEnum));
+            ViewData["TypeOfBody"] = Enumeration.GetAll<TypeOfBodyEnum>(); // Enum.GetValues(typeof(TypeOfBodyEnum));
+            ViewData["TypeOfGearbox"] = Enumeration.GetAll<GearboxEnum>();//Enum.GetValues(typeof(GearboxEnum));
+            ViewData["TypeOfFuel"] = Enumeration.GetAll<TypeOfFuelEnum>(); //Enum.GetValues(typeof(TypeOfFuelEnum));
             return View();
         }
 
         [HttpPost]
-        public IActionResult ChangeCar(CarModel model, IFormFile[] photos)
+        public IActionResult ChangeCar(CarModel model)
         {
             if (ModelState.IsValid)
             {
                 var car = _mapper.Map<Car>(model);
+                car.Images = ConvertImages(model.Images);
                 if (car != null)
                 {
                     if (model.Id == 0)
@@ -60,6 +65,20 @@ namespace MyFinalProject.Controllers
         {
             ViewData["IsAdmin"] = _userService.isAdmin;
             base.OnActionExecuting(context);
+        }
+
+        private List<CarImage> ConvertImages(IList<IFormFile> images)
+        {
+            var result = new List<CarImage>();
+            foreach(var image in images)
+            {
+                var carImage = new CarImage();                
+                var memoryStream = new MemoryStream();
+                image.CopyTo(memoryStream);
+                carImage.Image = memoryStream.ToArray();
+                result.Add(carImage);
+            }
+            return result;
         }
     }
 }
