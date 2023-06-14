@@ -1,0 +1,88 @@
+﻿@using AutoStoreLib.Models;
+@model Car;
+<div class="row">
+    <div class="col-md-6">
+        <label for="Name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="Name" name="Name" required disabled value="@Model.Name">
+    </div>
+    <div class="col-md-6">
+        <label for="Year" class="form-label">Year</label>
+        <input type="number" min="1900" max="@DateTime.Now.Year" class="form-control" id="Year" name="Year" required disabled value="@Model.Year">
+    </div>
+    <div class="col-6">
+        <label for="Price" class="form-label">Price, $</label>
+        <input type="number" min="0" class="form-control" id="Price" name="Price" required disabled value="@Model.Price">
+    </div>
+    <div class="col-6">
+        <label for="TypeOfBodyId" class="form-label">Type of body</label>
+        <select id="TypeOfBodyId" name="TypeOfBodyId" class="form-select" aria-label="Select type of body" required disabled>
+            @foreach (var bodyId in (Dictionary<int, string>)ViewData["TypeOfBody"])
+            {
+                if (bodyId.Key == Model.TypeOfBodyId)
+                {
+                    <option value="@bodyId.Key" selected>@bodyId.Value</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-6">
+        <label for="Mileage" class="form-label">Mileage</label>
+        <input type="number" min="0" class="form-control" id="Mileage" name="Mileage" required disabled value="@Model.Mileage">
+    </div>
+    <div class="col-6">
+        <label for="EngineСapacity" class="form-label">Engine Сapacity</label>
+        <input type="number" min="0" class="form-control" id="EngineСapacity" name="EngineСapacity" required disabled value="@Model.EngineСapacity">
+    </div>
+    <div class="col-6">
+        <label for="TypeOfFuelId" class="form-label">Type of fuel</label>
+        <select id="TypeOfFuelId" name="TypeOfFuelId" class="form-select" aria-label="Select type of gearbox" required disabled>
+            @foreach (var fuelId in (Dictionary<int, string>)ViewData["TypeOfFuel"])
+            {
+                if (fuelId.Key == Model.TypeOfFuelId)
+                {
+                    <option value="@fuelId.Key">@fuelId.Value</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-6">
+        <label for="GearboxId" class="form-label">Gearbox</label>
+        <select id="GearboxId" name="GearboxId" class="form-select" aria-label="Select type of gearbox" required disabled>
+            @foreach (var gearboxId in (Dictionary<int, string>)ViewData["TypeOfGearbox"])
+            {
+                if (gearboxId.Key == Model.GearboxId)
+                {
+                    <option value="@gearboxId.Key">@gearboxId.Value</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-12">
+        <label for="Vin" class="form-label">Vin</label>
+        <input type="text" class="form-control" id="Vin" name="Vin" required disabled value="@Model.Vin">
+    </div>
+    <div class="col-md-12">
+        <label for="Description" class="form-label">Description</label>
+        <textarea class="form-control" id="Description" name="Description" rows="3" required disabled>@Model.Description</textarea>
+    </div>
+    <div class="row">
+        <h3>Images</h3>
+        <div class="images-div">
+            @if (Model.Images.Count() > 0)
+            {
+                @foreach (var image in Model.Images)
+                {
+                    <div class="image-div">
+                        <a href="@Url.Action( "Show", "Image", new { id = @image.Id } )" data-jbox-image="gallery1" title="@Model.Name">
+                            <img src="@Url.Action( "Show", "Image", new { id = @image.Id } )" alt="">
+                        </a>
+                    </div>
+                }
+            }
+            else
+            {
+                <h5>No images</h5>
+            }
+        </div>
+    </div>
+</div>

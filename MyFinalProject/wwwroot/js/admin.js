@@ -43,9 +43,10 @@
 
         })
         .done(function (data) {
-            $("#add-car-form")[0].reset();
-            pond.removeFiles();
-            $("#add-car-div").toggle("blind", 500);
+            window.location.href= "/Admin/Index";
+            //$("#add-car-form")[0].reset();
+            //pond.removeFiles();
+            //$("#add-car-div").toggle("blind", 500);
             //$("#cars-list").append(
         })
         .fail(function (data) {
@@ -55,5 +56,14 @@
         });
 
     });
+
+    new jBox('Image');
+
+    //gridGallery({
+    //    selector: ".square-gallery",
+    //    layout: "square",
+    //    gapLength: 1,
+    //    columnWidth: 200
+    //});
 
 });

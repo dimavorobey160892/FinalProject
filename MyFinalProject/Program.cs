@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using MyFinalProject.Services;
 using MyFinalProject.Mapper;
 using AutoMapper;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,10 @@ builder.Services.AddAuthorization();
 
 var connectionString = builder.Configuration.GetConnectionString("autoStoreDb") ?? throw new InvalidOperationException("Connection string 'autoStoreDb' not found.");
 builder.Services.AddDbContext<Context>(options =>
-    options.UseSqlServer(connectionString));
+{
+    options.UseSqlServer(connectionString);
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+});
 
 //builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddHttpContextAccessor();

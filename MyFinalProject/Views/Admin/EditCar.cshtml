@@ -1,0 +1,118 @@
+﻿@using AutoStoreLib.Models;
+@model Car;
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="text-center">Edit car</h1>
+    </div>
+
+@using (Html.BeginForm("ChangeCar", "Admin", FormMethod.Post, new { @class = "row g-3", id = "add-car-form" }))
+{
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="col-md-6">
+        <label for="Name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="Name" name="Name" required value="@Model.Name">
+    </div>
+    <div class="col-md-6">
+        <label for="Year" class="form-label">Year</label>
+        <input type="number" min="1900" max="@DateTime.Now.Year" class="form-control" id="Year" name="Year" required value="@Model.Year">
+    </div>
+    <div class="col-6">
+        <label for="Price" class="form-label">Price, $</label>
+        <input type="number" min="0" class="form-control" id="Price" name="Price" required value="@Model.Price">
+    </div>
+    <div class="col-6">
+        <label for="TypeOfBodyId" class="form-label">Type of body</label>
+        <select id="TypeOfBodyId" name="TypeOfBodyId" class="form-select" aria-label="Select type of body" required>
+            @foreach (var bodyId in (Dictionary<int, string>)ViewData["TypeOfBody"])
+            {
+                if (bodyId.Key == Model.TypeOfBodyId)
+                {
+                    <option value="@bodyId.Key" selected>@bodyId.Value</option>
+                }
+                else
+                {
+                    <option value="@bodyId.Key">@bodyId.Value</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-6">
+        <label for="Mileage" class="form-label">Mileage</label>
+        <input type="number" min="0" class="form-control" id="Mileage" name="Mileage" required value="@Model.Mileage">
+    </div>
+    <div class="col-6">
+        <label for="EngineСapacity" class="form-label">Engine Сapacity</label>
+        <input type="number" min="0" class="form-control" id="EngineСapacity" name="EngineСapacity" required value="@Model.EngineСapacity">
+    </div>
+    <div class="col-6">
+        <label for="TypeOfFuelId" class="form-label">Type of fuel</label>
+        <select id="TypeOfFuelId" name="TypeOfFuelId" class="form-select" aria-label="Select type of gearbox" required>
+            @foreach (var fuelId in (Dictionary<int, string>)ViewData["TypeOfFuel"])
+            {
+                if (fuelId.Key == Model.TypeOfFuelId)
+                {
+                    <option value="@fuelId.Key" selected>@fuelId.Value</option>
+                }
+                else
+                {
+                    <option value="@fuelId.Key">@fuelId.Value</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-6">
+        <label for="GearboxId" class="form-label">Gearbox</label>
+        <select id="GearboxId" name="GearboxId" class="form-select" aria-label="Select type of gearbox" required>
+            @foreach (var gearboxId in (Dictionary<int, string>)ViewData["TypeOfGearbox"])
+            {                
+                if (gearboxId.Key == Model.GearboxId)
+                {
+                    <option value="@gearboxId.Key" selected>@gearboxId.Value</option>
+                }
+                else
+                {
+                    <option value="@gearboxId.Key">@gearboxId.Value</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-12">
+        <label for="Vin" class="form-label">Vin</label>
+        <input type="text" class="form-control" id="Vin" name="Vin" required value="@Model.Vin">
+    </div>
+    <div class="col-md-12">
+        <label for="Description" class="form-label">Description</label>
+        <textarea class="form-control" id="Description" name="Description" rows="3" required>@Model.Description</textarea>
+    </div>
+
+    <div class="col-md-12">
+        <label for="Images" class="form-label">Images</label>
+        <input type="file"
+               class="filepond"
+               name="Images"
+               multiple
+               data-allow-reorder="true" required>
+    </div>
+    <button class="btn btn-primary" type="submit" id="save-car-btn">Update</button>
+}
+
+</div>
+
+@section Scripts{
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-validate-size/dist/filepond-plugin-image-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="~/lib/filepond/filepond.min.js"></script>
+    <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
+    <script src="~/js/admin.js"></script>
+}
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="https://pqina.nl/filepond/static/assets/filepond.css" />
+    <link href="~/lib/filepond/filepond.min.css" rel="stylesheet" />
+}

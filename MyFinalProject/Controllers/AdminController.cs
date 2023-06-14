@@ -29,12 +29,6 @@ namespace MyFinalProject.Controllers
         }
         public IActionResult Index()
         {
-            var cars = _context.Cars
-                .Include(car => car.Images).ToList();
-            ViewData["Cars"] = cars;
-            ViewData["TypeOfBody"] = Enumeration.GetAll<TypeOfBodyEnum>(); // Enum.GetValues(typeof(TypeOfBodyEnum));
-            ViewData["TypeOfGearbox"] = Enumeration.GetAll<GearboxEnum>();//Enum.GetValues(typeof(GearboxEnum));
-            ViewData["TypeOfFuel"] = Enumeration.GetAll<TypeOfFuelEnum>(); //Enum.GetValues(typeof(TypeOfFuelEnum));
             return View();
         }
 
@@ -61,9 +55,41 @@ namespace MyFinalProject.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        [Route("Admin/EditCar/{carId}")]
+        public IActionResult EditCar(int carId)
+        {
+            var car = _context.Cars.Include(car => car.Images).FirstOrDefault(c=>c.Id == carId);
+            if (car != null)
+            {
+                return View(car);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Route("Admin/DeleteCar/{carId}")]
+        public IActionResult DeleteCar(int carId)
+        {
+            var car = _context.Cars.Include(car => car.Images).FirstOrDefault(c => c.Id == carId);
+            if (car != null)
+            {
+                _context.CarImages.RemoveRange(car.Images);
+                _context.Cars.Remove(car);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             ViewData["IsAdmin"] = _userService.isAdmin;
+            var cars = _context.Cars
+                        .Include(car => car.Images).ToList();
+            ViewData["Cars"] = cars;
+            ViewData["TypeOfBody"] = Enumeration.GetAll<TypeOfBodyEnum>();
+            ViewData["TypeOfGearbox"] = Enumeration.GetAll<GearboxEnum>();
+            ViewData["TypeOfFuel"] = Enumeration.GetAll<TypeOfFuelEnum>();
             base.OnActionExecuting(context);
         }
 
