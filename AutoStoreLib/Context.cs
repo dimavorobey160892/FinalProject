@@ -77,6 +77,16 @@ namespace AutoStoreLib
                 .WithMany(admin => admin.AnsweredOrders)
                 .HasForeignKey(answeredOrder => answeredOrder.AdminId);
 
+            builder.Entity<QuestionMessage>()
+                .HasOne(message => message.User)
+                .WithMany( user => user.QuestionMessages)
+                .HasForeignKey(message => message.UserId);
+
+            builder.Entity<AnswerMessage>()
+                .HasOne(message => message.User)
+                .WithMany(user => user.AnswerMessages)
+                .HasForeignKey(message => message.UserId);
+
             builder.Entity<Role>().HasData(new Role(1, "User"), new Role(2, "Admin"));
 
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

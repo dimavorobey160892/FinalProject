@@ -371,3 +371,35 @@ a:active {
 .description-div p {
     font-size: 20px;
 }
+
+.question-message {
+    margin: 5px;
+    border: 1px #0064ff solid;
+    border-radius: 20px;
+    padding: 15px;
+    margin-left: 25%;
+    background: #f6fbff;
+}
+
+.answer-message {
+    margin: 5px;
+    border: 1px #218d00 solid;
+    border-radius: 20px;
+    padding: 15px;
+    margin-right: 25%;
+    background: #f6fff9;
+}
+.message-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.message-body {
+    padding: 10px;
+    word-wrap: break-word;
+}
+
+.messages-list {
+    max-height: 400px;
+    overflow-y: auto;
+}

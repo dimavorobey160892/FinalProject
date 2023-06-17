@@ -1,0 +1,57 @@
+﻿@using AutoStoreLib.Models;
+@model Question;
+
+<h1>@Model.Title</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <a href="@Url.Action( "ViewCar", "Home", new { id = Model.CarId } )" class="btn btn-info">View car</a>
+            <a href="@Url.Action( "MyQuestions", "Home" )" class="btn btn-light">Back to questions</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="messages-list">
+            @foreach (var message in (List<MessageModel>)ViewData["Messages"])
+            {
+                <div class="message 
+                @if(message.Type == MessageType.Question)
+                { 
+                    Write("question-message"); 
+                }
+                else
+                {
+                    Write("answer-message");
+                }">
+                    <div class="message-header">
+                        <div class="message-author">
+                            <i class="fa-solid fa-user"></i>&nbsp;&nbsp; @message.UserName
+                        </div>
+                        <div class="message-date">
+                            <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp; @message.Date
+                        </div>
+                    </div>
+                    <div class="message-body">
+                        @message.Text
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="question-div">
+            @using (Html.BeginForm("Question", "Home", FormMethod.Post, new { @class = "question-form" }))
+            {
+                <div class="mb-3">
+                    <input type="hidden" name="Id" id="Id" value="@Model.Id">
+                    <input type="hidden" name="CarId" id="CarId" value="@Model.CarId">
+                    <input type="hidden" name="Title" id="Title" value="@Model.Title">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Text" class="form-label">Enter your question</label>
+                    <textarea class="form-control" id="Text" name="Text" rows="3" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Send</button>
+            }
+        </div>
+    </div>
+</div>

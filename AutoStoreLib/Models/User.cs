@@ -39,6 +39,8 @@ namespace AutoStoreLib.Models
         public virtual List<Question> Questions { get; set; }
         public virtual List<Answer> Answers { get; set; }
         public virtual Role Role { get; set; }
+        public virtual List<QuestionMessage> QuestionMessages { get; set; }
+        public virtual List<AnswerMessage> AnswerMessages { get; set; }
 
     }
 }

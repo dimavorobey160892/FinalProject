@@ -22,6 +22,7 @@ builder.Services.AddAuthorization();
 var connectionString = builder.Configuration.GetConnectionString("autoStoreDb") ?? throw new InvalidOperationException("Connection string 'autoStoreDb' not found.");
 builder.Services.AddDbContext<Context>(options =>
 {
+    options.UseLazyLoadingProxies();
     options.UseSqlServer(connectionString);
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });

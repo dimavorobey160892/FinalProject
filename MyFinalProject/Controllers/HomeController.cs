@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using AutoStoreLib.Models;
+using NuGet.Protocol;
 
 namespace MyFinalProject.Controllers
 {
@@ -99,12 +100,24 @@ namespace MyFinalProject.Controllers
             {
                 if (_context.Cars.Any(c => c.Id == model.CarId))
                 {
-                    var question = new Question(_userService.UserId, model.Title, model.CarId);
-                    question.Messages = new List<QuestionMessage>();
-                    question.Messages.Add(new QuestionMessage(_userService.UserId, model.Text));
-                    _context.Questions.Add(question);
+                    if (model.Id == 0)
+                    {                        
+                        var question = new Question(_userService.UserId, model.Title, model.CarId);
+                        question.Messages = new List<QuestionMessage>();
+                        question.Messages.Add(new QuestionMessage(_userService.UserId, model.Text));
+                        _context.Questions.Add(question);
+                    }
+                    else
+                    {
+                        var questionDb = _context.Questions.Include(q=>q.Messages).FirstOrDefault(q => q.Id == model.Id && q.CarId == model.CarId && q.UserId == _userService.UserId);
+                        if (questionDb != null)
+                        {
+                            questionDb.Messages.Add(new QuestionMessage(_userService.UserId, model.Text));
+                            _context.Questions.Update(questionDb);
+                        }
+                    }
                     _context.SaveChanges();
-                    return View("SavedSuccessfully");
+                    return RedirectToAction("ViewQuestion", new { questionId = model.Id });
 
                 }
                 else
@@ -118,15 +131,91 @@ namespace MyFinalProject.Controllers
 
         [HttpGet]
         [Authorize]
+        [Route("Home/ViewQuestion/{questionId}")]
+        public IActionResult ViewQuestion(int questionId)
+        {
+            var question = _context.Questions
+                .Include(q => q.Messages).ThenInclude(q=>q.User)
+                .Include(q => q.Answer.Messages).ThenInclude(q=>q.User)
+                .Include(q => q.Car)
+                .FirstOrDefault(q => q.Id == questionId && q.UserId == _userService.UserId);
+            if (question != null)
+            {
+                ViewData["Messages"] = GetMessages(question.Messages, question.Answer?.Messages);
+                return View(question);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
+
+        //witre private method to get messages from question and answer (combine them and sort by date)
+        private List<MessageModel> GetMessages(List<QuestionMessage> questionMessages, List<AnswerMessage> answerMessages)
+        {
+            var messages = new List<MessageModel>();
+            if (questionMessages != null)
+            {
+                foreach (var message in questionMessages)
+                {
+                    messages.Add(new MessageModel(message.Text, $"{message.User.FirstName} {message.User.LastName}", message.Date, MessageType.Question));
+                }
+            }
+
+            if (answerMessages != null)
+            {
+                foreach (var message in answerMessages)
+                {
+                    messages.Add(new MessageModel(message.Text, $"{message.User.FirstName} {message.User.LastName}", message.Date, MessageType.Question));
+                }
+            }
+
+            messages.Sort((x, y) => DateTime.Compare(x.Date, y.Date));
+            return messages;
+        }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult MyQuestions()
         {
             var questions = _context.Questions
                 .Include(q => q.Messages)
-                .Include(q=>q.Answer.Messages)
-                .Include(q=>q.Car)
-                .Where(q=>q.UserId == _userService.UserId)
+                .Include(q => q.Answer.Messages)
+                .Include(q => q.Car)
+                .Where(q => q.UserId == _userService.UserId)
                 .ToList();
             return View(questions);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Answer(AnswerModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var question = _context.Questions
+                    .Include(q => q.Messages)
+                    .Include(q => q.Answer.Messages)
+                    .Include(q => q.Car)
+                    .FirstOrDefault(q => q.Id == model.QuestionId && q.UserId == _userService.UserId);
+                if (question != null)
+                {
+                    var answer = new Answer(_userService.UserId, model.QuestionId, question.Title);                   
+                    answer.Messages = new List<AnswerMessage>();
+                    answer.Messages.Add(new AnswerMessage(_userService.UserId, model.Text));
+                    _context.Answers.Add(answer);
+                    _context.SaveChanges();
+                    return RedirectToAction("ViewQuestion", new { questionId = model.QuestionId });
+
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+
+            return View();
         }
 
 

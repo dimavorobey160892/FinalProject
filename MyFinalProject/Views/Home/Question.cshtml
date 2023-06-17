@@ -7,7 +7,7 @@
 <h1>Question about @Model.Name @Model.Year</h1>
 
 
-@using (Html.BeginForm("Question", "Home", FormMethod.Post, new { @class = "login-form" }))
+@using (Html.BeginForm("Question", "Home", FormMethod.Post, new { @class = "question-form" }))
 {
     <div class="mb-3">
         <input type="hidden" name="CarId" id="CarId" value="@Model.Id">
