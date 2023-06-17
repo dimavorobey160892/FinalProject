@@ -1,0 +1,90 @@
+﻿@using AutoStoreLib.Models;
+@using AutoStoreLib.Enums;
+@model Car;
+
+<div class="row">
+    <div class="title-div" style="background-image: url(@Url.Action( "Show", "Image", new { id = Model.Images?.FirstOrDefault()?.Id },"https"));">
+        <div class="title-background-overlay">
+            <h1>@Model.Name @Model.Year</h1>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row main-div">
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <div class="main-img">
+                <img src="@Url.Action( "Show", "Image", new { id = Model.Images?.FirstOrDefault()?.Id } )" alt="@Model.Name" />
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <div class="description">
+                <div class="description-price">
+                    <span><i class="fa-solid fa-money-check-dollar" aria-hidden="true"></i>&nbsp;&nbsp;Price: </span><strong class="red-text">$@Model.Price</strong>
+                </div>
+                <div class="description-details">
+                    <div class="description-detail">
+                        <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;Year: @Model.Year
+                    </div>
+                    <div class="description-detail">
+                        <i class="fa-solid fa-gauge"></i>&nbsp;&nbsp;Mileage: @Model.Mileage
+                    </div>
+                    <div class="description-detail">
+                        <i class="fa-solid fa-gas-pump"></i>&nbsp;&nbsp;Fuel: @((TypeOfFuelEnum)Model.TypeOfFuelId)
+                    </div>
+                    <div class="description-detail">
+                        <i class="fa-solid fa-droplet"></i>&nbsp;&nbsp;Capacity: @Model.EngineСapacity
+                    </div>
+                    <div class="description-detail">
+                        <i class="fa-solid fa-gears"></i>&nbsp;&nbsp;Gearbox: @((GearboxEnum)Model.GearboxId)
+                    </div>
+                    <div class="description-detail">
+                        <i class="fa-solid fa-car"></i>&nbsp;&nbsp;Body: @((TypeOfBodyEnum)Model.TypeOfBodyId)
+                    </div>
+                </div>
+                <div class="ask-question-div car-more">
+                    <a href="@Url.Action( "Question", "Home", new { id = Model.Id } )" class="btn red-btn">Ask a question</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="vin-div">
+            <div class="vin">
+                <span>VIN: </span><strong>@Model.Vin</strong>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="description-div">
+            <h3>Description</h3>
+            <p>@Model.Description</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="images-div">
+            @if (Model.Images.Count() > 0)
+            {
+                @foreach (var image in Model.Images)
+                {
+                    <div class="image-div">
+                        <a class="jbox-img" href="@Url.Action( "Show", "Image", new { id = @image.Id } )" data-jbox-image="gallery1" title="@Model.Name">
+                            <img src="@Url.Action( "Show", "Image", new { id = @image.Id } )" alt="">
+                        </a>
+                    </div>
+                }
+            }
+            else
+            {
+                <h5>No images</h5>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function(){
+            new jBox('Image');
+        })
+    </script>
+}

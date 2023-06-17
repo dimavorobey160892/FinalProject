@@ -9,12 +9,11 @@ namespace AutoStoreLib.Models
     public record QuestionMessage : BaseEntity
     {
         public QuestionMessage() { }
-        public QuestionMessage(int userId, string text, int questionId)
+        public QuestionMessage(int userId, string text)
         {
             UserId = userId;
             Text = text;
             Date = DateTime.Now;
-            QuestionId = questionId;
         }
 
         public string Text { get; set; }

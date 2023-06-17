@@ -16,8 +16,15 @@ namespace MyFinalProject.Controllers
 
         public ActionResult Show(int id)
         {
-            var imageData = _context.CarImages.Find(id).Image;
-            return File(imageData, "image/jpg");
+            var imageData = _context.CarImages.Find(id)?.Image;
+            if (imageData == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return File(imageData, "image/jpg");
+            }
         }
     }
 }

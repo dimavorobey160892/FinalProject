@@ -20,7 +20,6 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
     font-family: 'Roboto-Black', sans-serif;
 }
 
@@ -63,6 +62,10 @@ a:active {
 
 .black-background > .row{
     padding: 20px 0px;
+}
+
+.bottom-div .black-background {
+    padding:20px;
 }
 
 .address-top {
@@ -189,8 +192,6 @@ a:active {
     text-align: center;
 }
 
-/*admin*/
-
 .display-none{
     display: none;
 }
@@ -215,4 +216,158 @@ a:active {
 
 .image-div img {
     width: 200px;
+}
+
+.car-div {
+    background-color: #f5f5f5;
+    display: grid;
+    margin-bottom: 20px;
+}
+
+.car-img {
+    position: relative;
+    overflow: hidden;
+}
+
+.car-img:after {
+    position: relative;
+    overflow: hidden;
+}
+
+.car-img>a {
+    width: 100%;
+}
+
+.car-img>a>img {
+    width: inherit;
+    transition: .5s ease all; 
+    object-fit:cover;
+    min-height: 250px;
+}
+
+.car-img>a>img:hover, .car-img>a>img:active {
+    transform: scale(1.1);
+}
+
+.car-title {
+    padding: 15px;
+    text-align: center;
+}
+
+.car-title a {
+    color: #d70102;
+    font-size: 1.75rem;
+    text-decoration: none;
+}
+
+.car-details {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.car-detail {
+    display: flex;
+    width: 50%;
+    justify-content: flex-start;
+}
+
+.car-price {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.red-text {
+    color: #D70102;
+}
+
+.car-more {
+    padding: 20px;
+}
+
+.car-more a {
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    width: 100%;
+    background-color: #D70102;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.car-more a:hover {
+    color: #D70102;
+    text-decoration: none;
+    background-color: #ffffff;
+    border: 1px solid #D70102;
+}
+
+.title-div {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0;
+}
+
+.title-background-overlay {
+    background-color: #2B2A29;
+    opacity: 0.7;
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 80px 0px 80px 0px;
+}
+
+.title-div h1 {
+    color: #fff;
+    font-size: 42px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.main-img {
+    width: 100%;
+}
+
+.main-img img {
+    width: inherit;
+}
+
+.main-div {
+    padding-top: 20px;
+}
+
+.description-price {
+    font-size: 30px;
+    padding-left: 20px;
+}
+
+.description-details {
+    padding-left: 20px;
+}
+
+.description-detail {
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+.vin-div {
+    padding: 10px;
+    font-size: 30px;
+}
+
+.description-div h3{
+    font-size: 30px;
+}
+
+.description-div p {
+    font-size: 20px;
 }

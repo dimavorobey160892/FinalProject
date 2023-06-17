@@ -1,0 +1,27 @@
+﻿@using AutoStoreLib.Models;
+@model List<Question>;
+
+<h1>Questions</h1>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Car</th>
+                <th scope="col">Title</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var question in Model)
+            {
+                <tr>
+                    <th scope="row">@question.Date</th>
+                    <td>@question.Car.Name @question.Car.Year</td>
+                    <td>@question.Title</td>
+                    <td><a href="@Url.Action( "ViewQuestion", "Home", new { id = question.Id } )" class="btn btn-info">View</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

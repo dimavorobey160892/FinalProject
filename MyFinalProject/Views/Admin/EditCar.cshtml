@@ -1,6 +1,6 @@
 ﻿@using AutoStoreLib.Models;
 @model Car;
-
+<div class="container">
 <div class="row">
     <div class="col-md-12">
         <h1 class="text-center">Edit car</h1>
@@ -86,17 +86,33 @@
         <textarea class="form-control" id="Description" name="Description" rows="3" required>@Model.Description</textarea>
     </div>
 
-    <div class="col-md-12">
-        <label for="Images" class="form-label">Images</label>
-        <input type="file"
-               class="filepond"
-               name="Images"
-               multiple
-               data-allow-reorder="true" required>
+    <div class="col-md-12 edit-images">
+            <label for="Images" class="form-label">Images</label>
+        <fieldset>
+            <legend>Images</legend>
+            <!-- a list of already uploaded files -->
+            <ul>
+                @foreach (var image in Model.Images)
+                {
+                    <li>
+                        <label>
+                                <input value="@Url.Action( "Show", "Image", new { id = @image.Id }, "https")" data-type="remote" checked type="checkbox">
+                            @Model.Name-@image.Id
+                        </label>
+                    </li>
+                }
+            </ul>
+
+            <!-- our filepond input -->
+            <input type="file" name="Images" required multiple>
+        </fieldset>
     </div>
-    <button class="btn btn-primary" type="submit" id="save-car-btn">Update</button>
+
+    <button class="btn btn-success" type="submit" id="save-car-btn">Update</button>
+    <a href="@Url.Action( "Index", "Admin")" class="btn btn-secondary">Cancel</a>
 }
 
+</div>
 </div>
 
 @section Scripts{
@@ -109,7 +125,54 @@
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="~/lib/filepond/filepond.min.js"></script>
     <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
-    <script src="~/js/admin.js"></script>
+
+    <script>
+        $(function(){
+
+            FilePond.registerPlugin(
+                FilePondPluginImagePreview,
+                FilePondPluginImageExifOrientation,
+                FilePondPluginFileValidateSize
+            );
+
+            const fieldsetElement = document.querySelector('fieldset');
+
+            // create a FilePond instance at the fieldset element location
+            const pond = FilePond.create(fieldsetElement);
+            console.log(pond.files);
+
+            $("#add-car-form").submit(function (e) {
+                e.preventDefault();
+                var formdata = new FormData(this);
+                var pondFiles = pond.getFiles();
+                for (var i = 0; i < pondFiles.length; i++) {
+                    formdata.append('Images', pondFiles[i].file);
+                }
+
+                $.ajax({
+                    url: "/Admin/ChangeCar",
+                    data: formdata,
+
+                    processData: false,
+                    contentType: false,
+                    method: "post"
+
+                })
+                .done(function (data) {
+                    window.location.href = "/Admin/Index";
+                    //$("#add-car-form")[0].reset();
+                    //pond.removeFiles();
+                    //$("#add-car-div").toggle("blind", 500);
+                    //$("#cars-list").append(
+                })
+                .fail(function (data) {
+                    $("body").html(
+                        '<div class="alert alert-danger">Could not reach server, please try again later.</div>'
+                    );
+                });
+            });
+        });
+    </script>
 }
 
 @section Styles{

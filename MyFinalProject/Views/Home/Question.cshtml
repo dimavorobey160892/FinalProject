@@ -1,21 +1,16 @@
 ﻿@using AutoStoreLib.Models;
+@model Car;
+
 @{
     ViewData["Title"] = "Question";
 }
-<h1>@ViewData["Title"]</h1>
+<h1>Question about @Model.Name @Model.Year</h1>
 
 
 @using (Html.BeginForm("Question", "Home", FormMethod.Post, new { @class = "login-form" }))
 {
     <div class="mb-3">
-        <label for="UserId" class="form-label">Choose User</label>
-        <select id="UserId" name="UserId" class="form-select" aria-label="Select user" required>
-            <option selected value="">Open this select menu</option>
-            @foreach (var user in (List<User>)ViewData["Users"])
-            {
-                <option value="@user.Id">@user.FirstName @user.LastName</option>
-            }
-        </select>
+        <input type="hidden" name="CarId" id="CarId" value="@Model.Id">
     </div>
 
     <div class="mb-3">

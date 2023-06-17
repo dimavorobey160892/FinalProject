@@ -47,6 +47,7 @@ namespace MyFinalProject.Controllers
                     }
                     else
                     {
+                        _context.CarImages.Where(c => c.CarId == car.Id).ToList().ForEach(c => _context.CarImages.Remove(c));
                         _context.Cars.Update(car);
                     }
                     _context.SaveChanges();

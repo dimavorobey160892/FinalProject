@@ -85,5 +85,11 @@ namespace MyFinalProject.Controllers
             ViewData["IsAdmin"] = _userService.isAdmin;
             base.OnActionExecuting(context);
         }
+
+        [HttpGet]
+        public IActionResult Unauthorized()
+        {
+            return View();
+        }
     }
 }

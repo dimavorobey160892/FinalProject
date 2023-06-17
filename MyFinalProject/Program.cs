@@ -12,7 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options => options.LoginPath = "/User/Login");
+    .AddCookie(options => 
+    {
+        options.LoginPath = "/User/Login";
+        options.AccessDeniedPath = "/User/Unauthorized";
+    });
 builder.Services.AddAuthorization();
 
 var connectionString = builder.Configuration.GetConnectionString("autoStoreDb") ?? throw new InvalidOperationException("Connection string 'autoStoreDb' not found.");

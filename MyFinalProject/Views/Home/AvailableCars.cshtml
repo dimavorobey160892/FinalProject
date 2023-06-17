@@ -1,0 +1,52 @@
+﻿@using AutoStoreLib.Models;
+@using AutoStoreLib.Enums;
+@model List<Car>;
+
+<div class="container">
+    <div class="row">
+        <h3>Available cars</h3>
+    </div>
+    <div class="row">
+        @foreach(var car in Model)
+        {
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="car-div">
+                    <div class="car-img">
+                        <a href="@Url.Action( "ViewCar", "Home", new { id = car.Id } )">
+                            <img src="@Url.Action( "Show", "Image", new { id = car.Images?.FirstOrDefault()?.Id } )" alt="@car.Name" />
+                        </a>
+                    </div>
+                    <div class="car-title">
+                        <a href="@Url.Action( "ViewCar", "Home", new { id = car.Id } )">@car.Name @car.Year</a>
+                    </div>
+                    <div class="car-details">
+                        <div class="car-detail">
+                            <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp; @car.Year
+                        </div>
+                        <div class="car-detail">
+                            <i class="fa-solid fa-gauge"></i>&nbsp;&nbsp; @car.Mileage
+                        </div>
+                        <div class="car-detail">
+                            <i class="fa-solid fa-gas-pump"></i>&nbsp;&nbsp; @((TypeOfFuelEnum)car.TypeOfFuelId)
+                        </div>
+                         <div class="car-detail">
+                            <i class="fa-solid fa-droplet"></i>&nbsp;&nbsp; @car.EngineСapacity
+                        </div>
+                        <div class="car-detail">
+                            <i class="fa-solid fa-gears"></i>&nbsp;&nbsp; @((GearboxEnum)car.GearboxId)
+                        </div>
+                        <div class="car-detail">
+                            <i class="fa-solid fa-car"></i>&nbsp;&nbsp; @((TypeOfBodyEnum)car.TypeOfBodyId)
+                        </div>                        
+                    </div>
+                    <div class="car-price">
+                        <span>Price: </span><strong class="red-text">$@car.Price</strong>
+                    </div>
+                    <div class="car-more">
+                        <a href="@Url.Action( "ViewCar", "Home", new { id = car.Id } )" class="btn red-btn">More deatails</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

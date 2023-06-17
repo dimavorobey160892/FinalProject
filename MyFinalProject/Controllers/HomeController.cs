@@ -7,6 +7,8 @@ using AutoStoreLib.Enums;
 using MyFinalProject.Services;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using AutoStoreLib.Models;
 
 namespace MyFinalProject.Controllers
 {
@@ -29,10 +31,25 @@ namespace MyFinalProject.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
-        public IActionResult Privacy()
+        public IActionResult AvailableCars()
         {
-            return View();
+            var cars = _context.Cars.Include(car => car.Images).ToList();
+            return View(cars);
+        }
+
+        [HttpGet]
+        [Route("Home/ViewCar/{carId}")]
+        public IActionResult ViewCar(int carId)
+        {
+            var car = _context.Cars.Include(car => car.Images).FirstOrDefault(c=>c.Id==carId);
+            if (car != null)
+            {
+                return View(car);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet]
@@ -58,26 +75,58 @@ namespace MyFinalProject.Controllers
             return View();
         }
 
-        public IActionResult Question()
+        [HttpGet]
+        [Authorize]
+        [Route("Home/Question/{carId}")]
+        public IActionResult Question(int carId)
         {
-            var users = _context.Users.ToList();
-            ViewData["Users"] = users;
-            return View();
+            var car = _context.Cars.Find(carId);
+            if (car != null)
+            {
+                return View(car);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Question(QuestionModel model)
         {
             if (ModelState.IsValid)
             {
-                //_context.Questions.Add(new AutoStoreLib.Models.Question(model.UserId, model.Title, model.Text));
-                //_context.SaveChanges();
-                return View("SavedSuccessfully");
+                if (_context.Cars.Any(c => c.Id == model.CarId))
+                {
+                    var question = new Question(_userService.UserId, model.Title, model.CarId);
+                    question.Messages = new List<QuestionMessage>();
+                    question.Messages.Add(new QuestionMessage(_userService.UserId, model.Text));
+                    _context.Questions.Add(question);
+                    _context.SaveChanges();
+                    return View("SavedSuccessfully");
+
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
 
-            var users = _context.Users.ToList();
-            ViewData["Users"] = users;
             return View();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult MyQuestions()
+        {
+            var questions = _context.Questions
+                .Include(q => q.Messages)
+                .Include(q=>q.Answer.Messages)
+                .Include(q=>q.Car)
+                .Where(q=>q.UserId == _userService.UserId)
+                .ToList();
+            return View(questions);
         }
 
 
