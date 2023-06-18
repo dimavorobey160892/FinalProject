@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AutoStoreLib.Models.Answer" Collapsed="true">
+    <Position X="7" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAEAAAAAAAQAAAAAAAAAFAAAAAQQAAAA=</HashCode>
+      <FileName>Models\Answer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoStoreLib.Models.AnswerMessage" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABABAAAAAAAAAAAAAAAAAAgAAAAAAAABAAAACgAAAAA=</HashCode>
+      <FileName>Models\AnswerMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoStoreLib.Models.BaseEntity" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\BaseEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoStoreLib.Models.CallRequest" Collapsed="true">
+    <Position X="1.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAQAAAAAABABAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CallRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoStoreLib.Models.Car" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACIAAQAIBQAgAAAAAoAAAAQAAAAAABAEAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Car.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoStoreLib.Models.CarImage" Collapsed="true">
+    <Position X="7" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAACAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CarImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoStoreLib.Models.Order" Collapsed="true">
+    <Position X="7" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hAIBAQAIAQAAACABAgAAAAgAAAAAgAAAEAAEhgAAAAE=</HashCode>
+      <FileName>Models\Order.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoStoreLib.Models.Question" Collapsed="true">
+    <Position X="1.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAQAAEAAAAAAAAiAAAAAAAABAAAAAwAAAAA=</HashCode>
+      <FileName>Models\Question.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoStoreLib.Models.QuestionMessage" Collapsed="true">
+    <Position X="1.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAgAAAAAAAAFAAAACAQAAAA=</HashCode>
+      <FileName>Models\QuestionMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoStoreLib.Models.Role" Collapsed="true">
+    <Position X="1.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoStoreLib.Models.User" Collapsed="true">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAEIIACAAAACAEEAAAAAAAAAgAAAGQAAAAgAAAAg=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoStoreLib.Context">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAACAKAAAAAAAAAAAAAAAAEgggAAAEQAAAAAAAABA=</HashCode>
+      <FileName>Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

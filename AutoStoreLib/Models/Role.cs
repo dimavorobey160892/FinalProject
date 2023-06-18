@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Models
 {
-    public record Role: BaseEntity
+    public class Role: BaseEntity
     {
         public string Name { get; set; }
 

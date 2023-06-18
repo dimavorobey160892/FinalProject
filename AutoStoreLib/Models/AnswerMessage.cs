@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Models
 {
-    public record AnswerMessage : BaseEntity
+    public class AnswerMessage : BaseEntity
     {
         public AnswerMessage() { }
         public AnswerMessage(int userId, string text)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Models
 {
-    public record BaseEntity
+    public class BaseEntity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

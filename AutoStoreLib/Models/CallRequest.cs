@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Models
 {
-    public record CallRequest: BaseEntity
+    public class CallRequest: BaseEntity
     {
         public CallRequest() { }
         public CallRequest(string name, string phoneNumber)

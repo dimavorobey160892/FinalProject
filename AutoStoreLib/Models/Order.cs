@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Models
 {
-    public record Order : BaseEntity
+    public class Order : BaseEntity
     {
         public Order() { }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Models
 {
-    public record CarImage: BaseEntity
+    public class CarImage: BaseEntity
     {
         public CarImage() { }
         public CarImage(int carId, byte[] image)

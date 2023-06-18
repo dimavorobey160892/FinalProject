@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Models
 {
-    public record User : BaseEntity
+    public class User : BaseEntity
     {
         public User()
         {

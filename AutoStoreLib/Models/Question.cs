@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoStoreLib.Models
 {
-    public record Question : BaseEntity
+    public class Question : BaseEntity
     {
         public Question() { }
         public Question(int userId, string title, int carId)
