@@ -2,14 +2,14 @@
 using MyFinalProject.Models;
 using AutoStoreLib;
 using System.Diagnostics;
-using System.Security.Principal;
 using AutoStoreLib.Enums;
 using MyFinalProject.Services;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using AutoStoreLib.Models;
-using NuGet.Protocol;
+using AutoMapper;
+using AutoStoreLib.Extensions;
 
 namespace MyFinalProject.Controllers
 {
@@ -19,15 +19,30 @@ namespace MyFinalProject.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly Context _context;
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger, Context context, IUserService userService)
+        public HomeController(ILogger<HomeController> logger, Context context, IUserService userService, IMapper mapper)
         {
             _logger = logger;
             _context = context;
             _userService = userService;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
+        {
+            var cars = _context.Cars.Include(car => car.Images).ToList();
+            return View(cars);
+        }
+
+        [HttpGet]
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Contacts()
         {
             return View();
         }
@@ -54,26 +69,57 @@ namespace MyFinalProject.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Order()
         {
-            var users = _context.Users.ToList();
-            ViewData["Users"] = users;
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Order(OrderModel model)
         {
             if (ModelState.IsValid)
             {
-                //_context.Orders.Add(new AutoStoreLib.Models.Order(model.UserId, model.Info,));
-                //_context.SaveChanges();
+                var order = _mapper.Map<Order>(model);
+                order.UserId = _userService.UserId;
+                order.StatusId = (int)OrderStatusEnum.New;
+                order.DateCreaded = DateTime.Now;
+                _context.Orders.Add(order);
+                _context.SaveChanges();
                 return View("SavedSuccessfully");
             }
+            return BadRequest();
+        }
 
-            var users = _context.Users.ToList();
-            ViewData["Users"] = users;
-            return View();
+        [HttpGet]
+        [Authorize]
+        [Route("Home/ViewOrder/{orderId}")]
+        public IActionResult ViewOrder(int orderId)
+        {
+            var order = _context.Orders
+                .Include(q => q.User)
+                .FirstOrDefault(q => q.Id == orderId && q.UserId == _userService.UserId);
+            if (order != null)
+            {
+                return View(order);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult MyOrders()
+        {
+            var orders = _context.Orders
+                .Include(o => o.User)
+                .Where(o => o.UserId == _userService.UserId)
+                .ToList();
+            return View(orders);
         }
 
         [HttpGet]
@@ -106,6 +152,8 @@ namespace MyFinalProject.Controllers
                         question.Messages = new List<QuestionMessage>();
                         question.Messages.Add(new QuestionMessage(_userService.UserId, model.Text));
                         _context.Questions.Add(question);
+                        _context.SaveChanges();
+                        return RedirectToAction("MyQuestions");
                     }
                     else
                     {
@@ -114,11 +162,10 @@ namespace MyFinalProject.Controllers
                         {
                             questionDb.Messages.Add(new QuestionMessage(_userService.UserId, model.Text));
                             _context.Questions.Update(questionDb);
+                            _context.SaveChanges();
                         }
                     }
-                    _context.SaveChanges();
                     return RedirectToAction("ViewQuestion", new { questionId = model.Id });
-
                 }
                 else
                 {
@@ -151,7 +198,6 @@ namespace MyFinalProject.Controllers
 
         }
 
-        //witre private method to get messages from question and answer (combine them and sort by date)
         private List<MessageModel> GetMessages(List<QuestionMessage> questionMessages, List<AnswerMessage> answerMessages)
         {
             var messages = new List<MessageModel>();
@@ -167,7 +213,7 @@ namespace MyFinalProject.Controllers
             {
                 foreach (var message in answerMessages)
                 {
-                    messages.Add(new MessageModel(message.Text, $"{message.User.FirstName} {message.User.LastName}", message.Date, MessageType.Question));
+                    messages.Add(new MessageModel(message.Text, $"{message.User.FirstName} {message.User.LastName}", message.Date, MessageType.Answer));
                 }
             }
 
@@ -201,7 +247,7 @@ namespace MyFinalProject.Controllers
                     .FirstOrDefault(q => q.Id == model.QuestionId && q.UserId == _userService.UserId);
                 if (question != null)
                 {
-                    var answer = new Answer(_userService.UserId, model.QuestionId, question.Title);                   
+                    var answer = new Answer(_userService.UserId, question.Title);                   
                     answer.Messages = new List<AnswerMessage>();
                     answer.Messages.Add(new AnswerMessage(_userService.UserId, model.Text));
                     _context.Answers.Add(answer);
@@ -218,6 +264,28 @@ namespace MyFinalProject.Controllers
             return View();
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult CallRequest()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult CallRequest(CallRequestModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var callRequest = _mapper.Map<CallRequest>(model);
+                callRequest.Date = DateTime.Now;
+                callRequest.IsCompleted = false;
+                _context.CallRequests.Add(callRequest);
+                _context.SaveChanges();
+                return View("SavedSuccessfully");
+            }
+            return BadRequest();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -228,6 +296,9 @@ namespace MyFinalProject.Controllers
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             ViewData["IsAdmin"] = _userService.isAdmin;
+            ViewData["TypeOfBody"] = Enumeration.GetAll<TypeOfBodyEnum>();
+            ViewData["TypeOfGearbox"] = Enumeration.GetAll<GearboxEnum>();
+            ViewData["TypeOfFuel"] = Enumeration.GetAll<TypeOfFuelEnum>();
             base.OnActionExecuting(context);
         }
 

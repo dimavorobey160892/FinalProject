@@ -1,5 +1,10 @@
 ﻿@using AutoStoreLib.Models;
 @using AutoStoreLib.Enums;
+@model List<Order>;
+
+@{
+    ViewData["Title"] = "Orders";
+}
 
 <div class="container">
     <h1>Orders</h1>
@@ -7,21 +12,19 @@
         <thead>
             <tr>
                 <th scope="col">Date</th>
-                <th scope="col">User</th>
                 <th scope="col">Car Model</th>
                 <th scope="col">Status</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var order in (List<Order>)ViewData["Orders"])
+            @foreach (var order in Model)
             {
                 <tr>
                     <th scope="row">@order.DateCreaded</th>
-                    <td>@order.User.FirstName @order.User.LastName</td>
                     <td>@order.CarModel</td>
                     <td class="@((OrderStatusEnum)order.StatusId)">@((OrderStatusEnum)order.StatusId)</td>
-                    <td><a href="@Url.Action( "ViewOrder", "Admin", new { userId = order.UserId, orderId = order.Id } )" class="btn btn-danger">View</a></td>
+                    <td><a href="@Url.Action( "ViewOrder", "Home", new { id = order.Id } )" class="btn btn-danger">View</a></td>
                 </tr>
             }
         </tbody>

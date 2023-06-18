@@ -4,6 +4,7 @@ using AutoStoreLib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoStoreLib.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230618132030_ChangeOrder")]
+    partial class ChangeOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,6 +195,10 @@ namespace AutoStoreLib.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AdminId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.Property<string>("Answer")
                         .HasColumnType("nvarchar(max)");
 
@@ -200,6 +207,7 @@ namespace AutoStoreLib.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Coments")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateAnswered")
@@ -247,14 +255,11 @@ namespace AutoStoreLib.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AdminId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -443,16 +448,19 @@ namespace AutoStoreLib.Migrations
 
             modelBuilder.Entity("AutoStoreLib.Models.Order", b =>
                 {
+                    b.HasOne("AutoStoreLib.Models.User", "Admin")
+                        .WithMany("AnsweredOrders")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("AutoStoreLib.Models.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("AutoStoreLib.Models.User", null)
-                        .WithMany("AnsweredOrders")
-                        .HasForeignKey("UserId1")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.Navigation("Admin");
 
                     b.Navigation("User");
                 });

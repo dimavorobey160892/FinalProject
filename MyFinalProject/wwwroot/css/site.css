@@ -400,6 +400,116 @@ a:active {
 }
 
 .messages-list {
-    max-height: 400px;
+    max-height: 500px;
     overflow-y: auto;
+}
+
+.saved-successfully{
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.New {
+    color: gray;
+}
+
+.InProgress {
+    color: lightskyblue;
+}
+
+.Finished {
+    color: green;
+}
+
+.Cancelled {
+    color: red;
+}
+
+.order-div .form-label-bold {
+    font-weight: bold;
+    font-size:20px;
+}
+
+.call-background {
+    background-image: url("../img/callback-banner.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0;
+}
+
+.call-background-overlay {
+    background-color: #2B2A29;
+    opacity: 0.7;
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 80px 0px 80px 0px;
+}
+
+.send-btn {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.call-request-text {
+    color: rgb(215, 1, 2);
+    font-weight: bold;
+}
+
+.call-background label{
+    color: white;
+}
+
+.splide__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.splide__slide__content {
+    text-align: center;
+    font-size: 50px;
+    word-wrap: break-word;
+}
+
+.about {
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+.about h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.about p {
+  margin-bottom: 10px;
+}
+
+.contacts {
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+.contacts a{
+    color: #0a0000 !important;
+    text-decoration:none;
+}
+
+.contacts h2{
+    margin-top: 20px;
+}
+
+.btn-danger {
+    color: #fff !important;
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+.btn-danger:hover {
+    color: #fff !important;
 }

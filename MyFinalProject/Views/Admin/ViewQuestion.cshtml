@@ -1,5 +1,6 @@
 ﻿@using AutoStoreLib.Models;
 @model Question;
+
 @{
     ViewData["Title"] = "Question";
 }
@@ -10,7 +11,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <a href="@Url.Action( "ViewCar", "Home", new { id = Model.CarId } )" class="btn btn-info">View car</a>
-            <a href="@Url.Action( "MyQuestions", "Home" )" class="btn btn-light">Back to questions</a>
+            <a href="@Url.Action( "Index", "Admin" )#questions" class="btn btn-light">Back to questions</a>
         </div>
     </div>
     <div class="row">
@@ -41,16 +42,15 @@
             }
         </div>
         <div class="question-div">
-            @using (Html.BeginForm("Question", "Home", FormMethod.Post, new { @class = "question-form" }))
+            @using (Html.BeginForm("Answer", "Admin", FormMethod.Post, new { @class = "answer-form" }))
             {
                 <div class="mb-3">
-                    <input type="hidden" name="Id" id="Id" value="@Model.Id">
-                    <input type="hidden" name="CarId" id="CarId" value="@Model.CarId">
-                    <input type="hidden" name="Title" id="Title" value="@Model.Title">
+                    <input type="hidden" name="QuestionId" id="QuestionId" value="@Model.Id">
+                    <input type="hidden" name="UserId" id="UserId" value="@Model.UserId">
                 </div>
 
                 <div class="mb-3">
-                    <label for="Text" class="form-label">Add message</label>
+                    <label for="Text" class="form-label">Add answer</label>
                     <textarea class="form-control" id="Text" name="Text" rows="3" required></textarea>
                 </div>
 

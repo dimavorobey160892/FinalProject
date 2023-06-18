@@ -1,8 +1,67 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using AutoStoreLib.Models;
+@model List<Car>;
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <section class="splide" aria-label="Slide Container Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide">
+                    <div class="splide__slide__container">
+                        <a href="#">
+                            <img src="~/img/logo2.png" />
+                        </a>                     
+                    </div>
+                    <div class="splide__slide__content">
+                        Auto of your dream
+                    </div>
+                </li>
+                @foreach(var car in Model)
+                {
+                    <li class="splide__slide">
+                        <div class="splide__slide__container">
+                            <a href="@Url.Action( "ViewCar", "Home", new { id = car.Id } )">
+                                <img src="@Url.Action( "Show", "Image", new { id = @car.Images.FirstOrDefault()?.Id }, "https" )">
+                            </a>
+                        </div>
+                        <div class="splide__slide__content">
+                            @car.Name @car.Year
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </section>
 </div>
+
+@await Html.PartialAsync("CallRequestForm")
+
+@section Scripts{
+    <script src="~/node_modules/splidejs/splide/dist/js/splide.min.js"></script>
+    <script>
+        $(function(){
+            new Splide('.splide', {
+                type: 'loop',
+                perPage: 1,
+                perMove: 1,
+                autoplay: true,
+                interval: 3000,
+                speed: 500,
+                breakpoints: {
+                    640: {
+                        perPage: 1,
+                    }
+                },
+                fixedHeight: '500px',
+            }).mount();
+        });        
+    </script>
+}
+
+@section Styles{
+    <link href="~/node_modules/splidejs/splide/dist/css/splide.min.css" rel="stylesheet" />
+    <link href="~/node_modules/splidejs/splide/dist/css/splide-core.min.css" rel="stylesheet" />
+    <link href="~/node_modules/splidejs/splide/dist/css/themes/splide-default.min.css" rel="stylesheet" />
+}

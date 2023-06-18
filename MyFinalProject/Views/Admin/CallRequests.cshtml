@@ -1,5 +1,34 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using AutoStoreLib.Models;
+@using AutoStoreLib.Enums;
+
+<div class="container">
+    <h1>Call requests</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phone number</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in (List<CallRequest>)ViewData["CallRequests"])
+            {
+                <tr>
+                    <th scope="row">@request.Date</th>
+                    <td>@request.Name</td>
+                    <td>@request.PhoneNumber</td>
+                    @if (request.IsCompleted)
+                    {
+                        <td>Completed</td>
+                    }
+                    else
+                    {
+                        <td><a href="@Url.Action( "ChangeCallRequestStatus", "Admin", new { id = request.Id } )" class="btn btn-danger">Complete</a></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

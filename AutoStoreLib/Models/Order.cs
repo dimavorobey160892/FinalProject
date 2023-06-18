@@ -43,19 +43,16 @@ namespace AutoStoreLib.Models
         public int TypeOfBodyId { get; set; }
         public int MinMileage { get; set; }
         public int MaxMileage { get; set; }
-        public int EngineId { get; set; }
         public double? MinEngineСapacity { get; set; }
         public double? MaxEngineСapacity { get; set; }
         public int GearboxId { get; set; }
         public int TypeOfFuelId { get; set; }
-        public string Coments { get; set; }
+        public string? Coments { get; set; }
         public int StatusId { get; set; }
         public DateTime DateCreaded { get; set; }
         public DateTime? DateAnswered { get; set; }
         public string? Answer { get; set; }
-        public int? AdminId { get; set; }
         public virtual User User { get; set; }
-        public virtual User Admin { get; set; }
 
     }
 }

@@ -1,0 +1,116 @@
+﻿@using AutoStoreLib.Models;
+@using AutoStoreLib.Enums;
+@model Order;
+@{
+    ViewData["Title"] = "Order";
+}
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <a href="@Url.Action( "Index", "Admin" )#orders" class="btn btn-light">Back to orders</a>
+        </div>
+    </div>
+
+    <div class="row order-div">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <label for="CarModel" class="form-label form-label-bold">Car Model: </label>
+            <label class="form-label">@Model.CarModel</label>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MinYear" class="form-label form-label-bold">Min Year: </label>
+            <label class="form-label">@Model.MinYear</label>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MaxYear" class="form-label form-label-bold">Max Year: </label>
+            <label class="form-label">@Model.MaxYear</label>        
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MinPrice" class="form-label form-label-bold">Min Price, $: </label>
+            <label class="form-label">@Model.MinPrice</label>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MaxPrice" class="form-label form-label-bold">Max Price, $: </label>
+            <label class="form-label">@Model.MaxPrice</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <label for="TypeOfBodyId" class="form-label form-label-bold">Type of body: </label>
+            <label class="form-label">@((TypeOfBodyEnum)Model.TypeOfBodyId)</label>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MinMileage" class="form-label form-label-bold">Min Mileage: </label>
+            <label class="form-label">@Model.MinMileage</label>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MaxMileage" class="form-label form-label-bold">Max Mileage: </label>
+            <label class="form-label">@Model.MaxMileage</label>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MinEngineСapacity" class="form-label form-label-bold">Min Engine Сapacity: </label>
+            <label class="form-label">@Model.MinEngineСapacity</label>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MaxEngineСapacity" class="form-label form-label-bold">Max Engine Сapacity: </label>
+            <label class="form-label">@Model.MaxEngineСapacity</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <label for="TypeOfFuelId" class="form-label form-label-bold">Type of fuel: </label>
+            <label class="form-label">@((TypeOfFuelEnum)Model.TypeOfFuelId)</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <label for="GearboxId" class="form-label form-label-bold">Gearbox: </label>
+            <label class="form-label">@((GearboxEnum)Model.GearboxId)</label>
+        </div>
+        <div class="col-md-12">
+            <label for="Coments" class="form-label form-label-bold">Coments: </label>
+            <label class="form-label">@Model.Coments</label>        
+        </div>
+    </div>
+    <div class="row order-div">
+        <div class="col-md-12">
+            <label for="Coments" class="form-label form-label-bold">Status: </label>
+            <label class="form-label @((OrderStatusEnum)Model.StatusId)">@((OrderStatusEnum)Model.StatusId)</label>
+        </div>
+        <div class="col-md-12">
+            <label for="Coments" class="form-label form-label-bold">Date Created: </label>
+            <label class="form-label">@Model.DateCreaded</label>
+        </div>
+    
+        @if (@Model.DateAnswered != null)
+        {
+            <div class="col-md-12">
+                <label for="Coments" class="form-label form-label-bold">Date Answered: </label>
+                <label class="form-label">@Model.DateAnswered</label>
+            </div>
+        }
+    </div>
+    @using (Html.BeginForm("ChangeOrder", "Admin", FormMethod.Post, new { @class = "order-form row" }))
+    {
+        <div class="col-md-12">
+            <input type="hidden" name="Id" value="@Model.Id">
+            <label for="StatusId" class="form-label">Change status</label>
+            <select id="StatusId" name="StatusId" class="form-select" required>
+                <option selected value="">Open this select menu</option>
+                @foreach (var statusId in (Dictionary<int, string>)ViewData["OrderStatuses"])
+                {
+                    if (statusId.Key == Model.StatusId)
+                    {
+                        <option value="@statusId.Key" selected>@statusId.Value</option>
+                    }
+                    else
+                    {
+                        <option value="@statusId.Key">@statusId.Value</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label for="Answer" class="form-label">Answer</label>
+            <textarea class="form-control" id="Answer" name="Answer" rows="3">@Model.Answer</textarea>
+        </div>
+        <div class="col-md-12" style="padding: 10px; text-align: center;">
+            <button type="submit" class="btn btn-danger">Submit</button>
+        </div>
+    }
+</div>

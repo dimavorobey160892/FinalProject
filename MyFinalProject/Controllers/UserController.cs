@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using MyFinalProject.Models;
 using MyFinalProject.Services;
 using Microsoft.AspNetCore.Mvc.Filters;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyFinalProject.Controllers
 {
@@ -13,11 +15,13 @@ namespace MyFinalProject.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly Context _context;
         private readonly IUserService _userService;
-        public UserController(ILogger<UserController> logger, Context context, IUserService userService)
+        private readonly IMapper _mapper;
+        public UserController(ILogger<UserController> logger, Context context, IUserService userService, IMapper mapper)
         {
             _logger = logger;
             _context = context;
             _userService = userService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Logout()
@@ -91,5 +95,40 @@ namespace MyFinalProject.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Settings()
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == _userService.UserId);
+            return View(user);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Settings(UserModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _context.Users.FirstOrDefault(u => u.Id == model.Id);
+                if (user != null)
+                {
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.Age = model.Age;
+                    user.Gender = model.Gender;
+                    user.Address = model.Address;
+                    user.Email = model.Email;
+                    user.Password = model.Password;
+
+                    _context.Users.Update(user);
+                    _context.SaveChanges();
+                    return RedirectToAction("Settings", user);
+                }
+            }
+            return BadRequest();
+            
+        }
+
     }
 }

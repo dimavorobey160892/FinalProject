@@ -72,11 +72,6 @@ namespace AutoStoreLib
                 .WithMany(user => user.Orders)
                 .HasForeignKey(order => order.UserId);
 
-            builder.Entity<Order>()
-                .HasOne(answeredOrder => answeredOrder.Admin)
-                .WithMany(admin => admin.AnsweredOrders)
-                .HasForeignKey(answeredOrder => answeredOrder.AdminId);
-
             builder.Entity<QuestionMessage>()
                 .HasOne(message => message.User)
                 .WithMany( user => user.QuestionMessages)

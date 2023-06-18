@@ -2,25 +2,84 @@
 @{
     ViewData["Title"] = "Order";
 }
-<h1>@ViewData["Title"]</h1>
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
 
-@using (Html.BeginForm("Order", "Home", FormMethod.Post, new { @class = "login-form" }))
-{
-    <div class="mb-3">
-        <label for="UserId" class="form-label">Choose User</label>
-        <select id="UserId" name="UserId" class="form-select" aria-label="Select user" required>
-            <option selected value="">Open this select menu</option>
-            @foreach (var user in (List<User>)ViewData["Users"])
-            {
-                <option value="@user.Id">@user.FirstName @user.LastName</option>
-            }
-        </select>
-    </div>
+    @using (Html.BeginForm("Order", "Home", FormMethod.Post, new { @class = "order-form row" }))
+    {
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <label for="CarModel" class="form-label">Car Model</label>
+            <input type="text" class="form-control" id="CarModel" name="CarModel" required>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MinYear" class="form-label">Min Year</label>
+            <input type="number" min="1900" max="@DateTime.Now.Year" class="form-control" id="MinYear" name="MinYear" required>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MaxYear" class="form-label">Max Year</label>
+            <input type="number" min="1900" max="@DateTime.Now.Year" class="form-control" id="MaxYear" name="MaxYear" required>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MinPrice" class="form-label">Min Price, $</label>
+            <input type="number" min="0" class="form-control" id="MinPrice" name="MinPrice" required>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MaxPrice" class="form-label">Max Price, $</label>
+            <input type="number" min="0" class="form-control" id="MaxPrice" name="MaxPrice" required>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <label for="TypeOfBodyId" class="form-label">Type of body</label>
+            <select id="TypeOfBodyId" name="TypeOfBodyId" class="form-select" aria-label="Select type of body" required>
+                <option selected value="">Open this select menu</option>
+                @foreach (var bodyId in (Dictionary<int, string>)ViewData["TypeOfBody"])
+                {
+                    <option value="@bodyId.Key">@bodyId.Value</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MinMileage" class="form-label">Min Mileage</label>
+            <input type="number" min="0" class="form-control" id="MinMileage" name="MinMileage" required>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MaxMileage" class="form-label">Max Mileage</label>
+            <input type="number" min="0" class="form-control" id="MaxMileage" name="MaxMileage" required>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MinEngineСapacity" class="form-label">Min Engine Сapacity</label>
+            <input type="number" min="0" class="form-control" id="MinEngineСapacity" name="MinEngineСapacity" required>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <label for="MaxEngineСapacity" class="form-label">Max Engine Сapacity</label>
+            <input type="number" min="0" class="form-control" id="MaxEngineСapacity" name="MaxEngineСapacity" required>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <label for="TypeOfFuelId" class="form-label">Type of fuel</label>
+            <select id="TypeOfFuelId" name="TypeOfFuelId" class="form-select" aria-label="Select type of gearbox" required>
+                <option selected value="">Open this select menu</option>
+                @foreach (var fuelId in (Dictionary<int, string>)ViewData["TypeOfFuel"])
+                {
+                    <option value="@fuelId.Key">@fuelId.Value</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <label for="GearboxId" class="form-label">Gearbox</label>
+            <select id="GearboxId" name="GearboxId" class="form-select" aria-label="Select type of gearbox" required>
+                <option selected value="">Open this select menu</option>
+                @foreach (var gearboxId in (Dictionary<int, string>)ViewData["TypeOfGearbox"])
+                {
+                    <option value="@gearboxId.Key">@gearboxId.Value</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label for="Coments" class="form-label">Coments</label>
+            <textarea class="form-control" id="Coments" name="Coments" rows="3"></textarea>
+        </div>
+        <div class="col-md-12" style="padding: 10px; text-align: center;">
+            <button type="submit" class="btn btn-danger">Submit</button>
+        </div>
 
-    <div class="mb-3">
-        <label for="Info" class="form-label">Enter order information</label>
-        <textarea class="form-control" id="Info" name="Info" rows="3"></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-}
+    }
+</div>

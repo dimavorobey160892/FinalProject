@@ -2,6 +2,10 @@
 @using AutoStoreLib.Enums;
 @model Car;
 
+@{
+    ViewData["Title"] = "Car";
+}
+
 <div class="row">
     <div class="title-div" style="background-image: url(@Url.Action( "Show", "Image", new { id = Model.Images?.FirstOrDefault()?.Id },"https"));">
         <div class="title-background-overlay">

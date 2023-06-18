@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@splidejs/splide": "^4.1.4",
     "jquery-html5-validity": "^1.1.2"
   }
 }

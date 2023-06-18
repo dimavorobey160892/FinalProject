@@ -4,24 +4,28 @@
 @{
     ViewData["Title"] = "Question";
 }
-<h1>Question about @Model.Name @Model.Year</h1>
+
+<div class="container">
+    <h1>Question about @Model.Name @Model.Year</h1>
 
 
-@using (Html.BeginForm("Question", "Home", FormMethod.Post, new { @class = "question-form" }))
-{
-    <div class="mb-3">
-        <input type="hidden" name="CarId" id="CarId" value="@Model.Id">
-    </div>
+    @using (Html.BeginForm("Question", "Home", FormMethod.Post, new { @class = "question-form" }))
+    {
+        <div class="mb-3">
+            <input type="hidden" name="CarId" id="CarId" value="@Model.Id">
+            <input type="hidden" name="Id" id="Id" value="0">
+        </div>
 
-    <div class="mb-3">
-        <label for="Title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="Title" name="Title" required>
-    </div>
+        <div class="mb-3">
+            <label for="Title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="Title" name="Title" required>
+        </div>
 
-    <div class="mb-3">
-        <label for="Text" class="form-label">Enter your question</label>
-        <textarea class="form-control" id="Text" name="Text" rows="3" required></textarea>
-    </div>
+        <div class="mb-3">
+            <label for="Text" class="form-label">Enter your question</label>
+            <textarea class="form-control" id="Text" name="Text" rows="3" required></textarea>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-}
+        <button type="submit" class="btn btn-danger">Submit</button>
+    }
+</div>

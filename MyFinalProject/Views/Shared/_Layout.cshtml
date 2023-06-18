@@ -82,9 +82,6 @@
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AvailableCars">Available Cars</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Question">Ask Question</a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About us</a>
                                     </li>
                                     <li class="nav-item">
@@ -119,7 +116,10 @@
                                                     <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="MyQuestions">My Questions</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Settings</a>
+                                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="MyOrders">My Orders</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Settings">Settings</a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
@@ -161,9 +161,6 @@
                         </li>
                         <li>
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AvailableCars">Available Cars</a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Question">Ask Question</a>
                         </li>
                         <li>
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About us</a>

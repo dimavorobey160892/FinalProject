@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using AutoStoreLib;
+﻿using AutoStoreLib;
 using Microsoft.AspNetCore.Mvc;
-using MyFinalProject.Services;
 
 namespace MyFinalProject.Controllers
 {

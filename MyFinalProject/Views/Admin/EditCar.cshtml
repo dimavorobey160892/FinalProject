@@ -1,5 +1,10 @@
 ﻿@using AutoStoreLib.Models;
 @model Car;
+
+@{
+    ViewData["Title"] = "Edit car";
+}
+
 <div class="container">
 <div class="row">
     <div class="col-md-12">
@@ -108,7 +113,7 @@
         </fieldset>
     </div>
 
-    <button class="btn btn-success" type="submit" id="save-car-btn">Update</button>
+     <button class="btn btn-danger" type="submit" id="save-car-btn">Update</button>
     <a href="@Url.Action( "Index", "Admin")" class="btn btn-secondary">Cancel</a>
 }
 

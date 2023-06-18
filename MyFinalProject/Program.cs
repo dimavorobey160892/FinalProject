@@ -5,6 +5,7 @@ using MyFinalProject.Services;
 using MyFinalProject.Mapper;
 using AutoMapper;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,13 @@ builder.Services.AddDbContext<Context>(options =>
 //builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.ValueCountLimit = int.MaxValue;
+    options.MultipartBodyLengthLimit = long.MaxValue;
+    options.MemoryBufferThreshold = int.MaxValue;
+});
 
 var mappingConfig = new MapperConfiguration(mc =>
 {
