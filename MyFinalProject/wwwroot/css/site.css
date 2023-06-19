@@ -36,7 +36,6 @@ a:focus {
 a:active {
     color: rgb(215, 1, 2) !important;
     text-decoration: none !important;
-    background-color: rgb(10, 0, 0) !important;
 }
 
 .black-background {
@@ -471,9 +470,23 @@ a:active {
 }
 
 .splide__slide__content {
+    position: absolute;
+    top: 70%;
     text-align: center;
-    font-size: 50px;
+    width: 100%;
+    color: #ffffff;
+    FONT-SIZE: 150px;
     word-wrap: break-word;
+    background: #0000006b;
+}
+
+.splide__slide__content a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.splide{
+    padding: 0;
 }
 
 .about {

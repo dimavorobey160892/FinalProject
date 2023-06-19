@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoStoreLib\AutoStoreLib.csproj" />
+    <ProjectReference Include="..\AutoStoreLib\AutoStoreLib.DAL.csproj" />
   </ItemGroup>
 
 </Project>

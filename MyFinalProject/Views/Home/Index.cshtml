@@ -10,31 +10,37 @@
             <ul class="splide__list">
                 <li class="splide__slide">
                     <div class="splide__slide__container">
-                        <a href="#">
-                            <img src="~/img/logo2.png" />
+                        <a asp-controller="Home" asp-action="AvailableCars">
+                            <img src="~/img/available-cars.jpg" />
                         </a>                     
                     </div>
                     <div class="splide__slide__content">
-                        Auto of your dream
+                        <a asp-controller="Home" asp-action="AvailableCars">Available Cars</a>
                     </div>
                 </li>
-                @foreach(var car in Model)
-                {
-                    <li class="splide__slide">
-                        <div class="splide__slide__container">
-                            <a href="@Url.Action( "ViewCar", "Home", new { id = car.Id } )">
-                                <img src="@Url.Action( "Show", "Image", new { id = @car.Images.FirstOrDefault()?.Id }, "https" )">
-                            </a>
-                        </div>
-                        <div class="splide__slide__content">
-                            @car.Name @car.Year
-                        </div>
-                    </li>
-                }
+                <li class="splide__slide">
+                    <div class="splide__slide__container">
+                        <a href="#call-request-form">
+                            <img src="~/img/banner-call-centers.jpg" />
+                        </a>
+                    </div>
+                    <div class="splide__slide__content">
+                        <a href="#call-request-form">We'll call you back</a>
+                    </div>
+                </li>
             </ul>
         </div>
     </section>
 </div>
+
+<main class="row" style="background: #e04340;padding-top: 15px;color: white;">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="display-4">Welcome to Auto of your Dream</h1>
+            <p class="lead">Discover your perfect car from our wide selection</p>
+        </div>
+    </section>
+</main>
 
 @await Html.PartialAsync("CallRequestForm")
 
@@ -54,7 +60,7 @@
                         perPage: 1,
                     }
                 },
-                fixedHeight: '500px',
+                fixedHeight: '700px',
             }).mount();
         });        
     </script>
