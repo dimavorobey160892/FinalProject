@@ -9,15 +9,21 @@
     @await Html.PartialAsync("AddCar")
 </div>
 <div id="cars-list">
+    @{
+        var index = 1;
+    }
     @foreach (var car in (List<Car>)ViewData["Cars"])
     {
-        <h3>@car.Id. @car.Name - @car.Year</h3>
+        <h3>@index. @car.Name - @car.Year</h3>
         <div>
             <a href="/Admin/EditCar/@car.Id" type="button" class="btn btn-warning edit">Edit</a>
             <a href="/Admin/DeleteCar/@car.Id" type="button" class="btn btn-danger delete">Delete</a>
 
             @await Html.PartialAsync("ViewCar", @car)     
-            
+
         </div>
+        {
+            index++;
+        }
     }    
 </div>

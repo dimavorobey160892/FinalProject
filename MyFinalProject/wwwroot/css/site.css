@@ -241,7 +241,7 @@ a:active {
     width: inherit;
     transition: .5s ease all; 
     object-fit:cover;
-    min-height: 250px;
+    height: 300px;
 }
 
 .car-img>a>img:hover, .car-img>a>img:active {
@@ -251,6 +251,7 @@ a:active {
 .car-title {
     padding: 15px;
     text-align: center;
+    height: 120px;
 }
 
 .car-title a {
